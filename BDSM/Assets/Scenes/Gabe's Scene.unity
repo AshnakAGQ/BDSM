@@ -204,8 +204,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 353224977
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 1.75, z: 0}
@@ -448,8 +448,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1177173709
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 1, z: 0}
@@ -1340,7 +1340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1037289698
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1375,7 +1375,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -1400,7 +1400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1037289697}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 2.75, y: -2.39, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2790,6 +2790,8 @@ GameObject:
   - component: {fileID: 2042734275}
   - component: {fileID: 2042734274}
   - component: {fileID: 2042734273}
+  - component: {fileID: 2042734277}
+  - component: {fileID: 2042734276}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2887,3 +2889,70 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &2042734276
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042734272}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &2042734277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042734272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8226ce5a77004774182c28181de640e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  message: 
+  playerTorso: {fileID: 0}
+  playerLegs: {fileID: 0}
+  playerArmLeft: {fileID: 0}
+  playerArmRight: {fileID: 0}
+  BloodParticles: {fileID: 0}
+  defaultWeapon: {fileID: 0}
+  weapon: {fileID: 0}
+  speed: 5
+  stun: 0
+  faceTarget: 1
+  maxHealth: 200
+  health: 100
+  slider: {fileID: 0}
+  fillImage: {fileID: 0}
+  FullHealthColor: {r: 0, g: 0, b: 0, a: 0}
+  ZeroHealthColor: {r: 0, g: 0, b: 0, a: 0}
+  footStepFileName: 
+  footStepVolume: 0.3
+  footStepPitchMin: 0.9
+  footStepPitchMax: 1.1
+  damagedFileName: 
+  damagedVolume: 0.3
+  damagedPitchMin: 0.9
+  damagedPitchMax: 1.1
+  healFileName: 
+  healVolume: 0.3
+  healPitchMin: 0.9
+  healPitchMax: 1.1
+  deathFileName: 
+  deathVolume: 0.3
+  deathPitchMin: 0.9
+  deathPitchMax: 1.1
