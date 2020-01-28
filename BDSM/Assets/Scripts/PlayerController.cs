@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamageable, IHealable
 {
@@ -18,12 +19,14 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
     [SerializeField] GameObject playerArmLeft = null;
     [SerializeField] GameObject playerArmRight = null;
     [SerializeField] ParticleSystem BloodParticles = null;
-    //[SerializeField] ScreenShake screenShake = null;
 
     [SerializeField] Weapon defaultWeapon = null;
     public Weapon weapon;
 
+    Vector2 Direction;
+    Vector2 LookDirection;
     [SerializeField] float speed = 5f;
+    [SerializeField] float rotationSpeed = 5f;
     [SerializeField] float stun = 0;
     [SerializeField] bool faceTarget = true;
 
@@ -58,7 +61,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
 
     AudioPlayer m_audioPlayer;
 
-
     void Awake()
     {
         instance = this;
@@ -92,7 +94,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
                 animator.SetFloat("Speed", Mathf.Abs(this.rigidbody2D.velocity.x) + Mathf.Abs(this.rigidbody2D.velocity.y));
             }
 
-
             if (weapon.checkDestroy())
             {
                 Destroy(weapon.gameObject);
@@ -102,27 +103,17 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
             if (Input.GetKeyDown(KeyCode.Q)) DropWeapon();
 
             if (stun > 0) stun -= Time.deltaTime;
-        
+
             else
             {
+                playerTorso.transform.right = LookDirection;
 
-                playerTorso.transform.right = (Vector2)(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+                rigidbody2D.velocity = Direction * speed;
 
-                rigidbody2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, Input.GetAxisRaw("Vertical") * speed);
-                if (rigidbody2D.velocity != Vector2.zero)
+                if (Direction != Vector2.zero)
                 {
-                    playerLegs.transform.right = rigidbody2D.velocity;
+                    playerLegs.transform.right = Direction;
                     if (faceTarget && Quaternion.Angle(playerTorso.transform.rotation, playerLegs.transform.rotation) > 90) playerLegs.transform.right = -1 * playerLegs.transform.right; // Keeps body facing mouse
-                }
-
-                if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space))
-                {
-                    if (weapon.checkDestroy())
-                    {
-                        Destroy(weapon.gameObject);
-                        SetDefaultWeapon();
-                    }
-                    weapon.Attack();
                 }
             }
         }
@@ -130,6 +121,44 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
         //Debug.DrawRay(transform.position, playerTorso.transform.right.normalized, Color.red, .01f);
         //Debug.DrawRay(transform.position, playerLegs.transform.up, Color.green, .01f); 
     }
+
+    void OnMove(InputValue value)
+    {
+        if (stun <= 0)
+        {
+            Direction = value.Get<Vector2>();
+        }
+        
+    }
+
+    void OnLook(InputValue value)
+    {
+        if (stun <= 0)
+        {
+            LookDirection = value.Get<Vector2>();
+        }
+    }
+
+    void OnLookMouse(InputValue value)
+    {
+        if (stun <= 0)
+        {
+            var mouse = Mouse.current;
+            LookDirection = (Vector2)(Camera.main.ScreenToWorldPoint(mouse.position.ReadValue()) - transform.position);
+        }
+    }
+
+    void OnAttack()
+    {
+        if (stun <= 0 && weapon.checkDestroy())
+        {
+            Destroy(weapon.gameObject);
+            SetDefaultWeapon();
+        }
+        weapon.Attack();
+    }
+
+    bool IsMoving => Direction != Vector2.zero;
 
     void OnTriggerStay2D(Collider2D collider)
     {
@@ -239,7 +268,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
 
         fillImage.color = Color.Lerp(ZeroHealthColor, FullHealthColor, health / 100); // 100 is the hardcoded starting health, might need to change later
     }
-
 
     private void playFootStepSFX()
     {
