@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
                 SetDefaultWeapon();
             }
 
-            if (Input.GetKeyDown(KeyCode.Q)) DropWeapon();
+            //if (Input.GetKeyDown(KeyCode.Q)) DropWeapon();
 
             if (stun > 0) stun -= Time.deltaTime;
 
