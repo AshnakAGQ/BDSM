@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LeverOn
+  m_Name: LeverOff
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,11 +20,11 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 827dac77718b4174dbcb8d9c537c7cca, type: 3}
+      value: {fileID: 21300000, guid: 1165e8eaba2f13845a96841c31b968c4, type: 3}
     - time: 0.46666667
       value: {fileID: 21300000, guid: cc63feb9acd5bb947b34fdb0ae5f2af7, type: 3}
     - time: 1
-      value: {fileID: 21300000, guid: 1165e8eaba2f13845a96841c31b968c4, type: 3}
+      value: {fileID: 21300000, guid: 827dac77718b4174dbcb8d9c537c7cca, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,9 +44,9 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 827dac77718b4174dbcb8d9c537c7cca, type: 3}
-    - {fileID: 21300000, guid: cc63feb9acd5bb947b34fdb0ae5f2af7, type: 3}
     - {fileID: 21300000, guid: 1165e8eaba2f13845a96841c31b968c4, type: 3}
+    - {fileID: 21300000, guid: cc63feb9acd5bb947b34fdb0ae5f2af7, type: 3}
+    - {fileID: 21300000, guid: 827dac77718b4174dbcb8d9c537c7cca, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
