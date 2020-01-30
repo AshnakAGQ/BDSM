@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
+    Animator animator;
     [SerializeField] Transform aimingCircle;
 
 
@@ -16,31 +17,44 @@ public class PlayerController : MonoBehaviour
     float speed = 5f;
 
     enum Directions { Up, Right, Down, Left }
-    Directions faceDirection;
 
     private void Awake()
     {
         rigidbody2D = this.GetComponent<Rigidbody2D>();
         collider2D = this.GetComponent<Collider2D>();
+        animator = this.GetComponent<Animator>();
     }
 
     private void Update()
     {
         if (Time.timeScale == 1)
         {
+            // Movement
             rigidbody2D.velocity = direction * speed;
 
-            aimingCircle.right = lookDirection;
+            if (direction != Vector2.zero)
+                animator.SetBool("moving", true);
+            else
+                animator.SetBool("moving", false);
 
+            // Aiming
             if (lookDirection != Vector2.zero)
             {
+                aimingCircle.right = lookDirection;
+
                 if (System.Math.Abs(lookDirection.y) > System.Math.Abs(lookDirection.x))
                 {
-                    faceDirection = lookDirection.y > 0 ? Directions.Up : Directions.Down;
+                    if ( lookDirection.y > 0)
+                        animator.SetInteger("direction", (int) Directions.Up);
+                    else
+                        animator.SetInteger("direction", (int) Directions.Down);
                 }
                 else
                 {
-                    faceDirection = lookDirection.x > 0 ? Directions.Right : Directions.Left;
+                    if (lookDirection.x > 0)
+                        animator.SetInteger("direction", (int) Directions.Right);
+                    else
+                        animator.SetInteger("direction", (int) Directions.Left);
                 }
             }
         }
