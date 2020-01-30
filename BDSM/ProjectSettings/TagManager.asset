@@ -60,13 +60,10 @@ TagManager:
   - name: Item
     uniqueID: 3332315887
     locked: 0
-  - name: Legs
-    uniqueID: 4078875125
-    locked: 0
   - name: Weapon
     uniqueID: 3408624109
     locked: 0
-  - name: Torso
+  - name: Players
     uniqueID: 3334475437
     locked: 0
   - name: Default
