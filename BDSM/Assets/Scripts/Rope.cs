@@ -22,6 +22,8 @@ public class Rope : MonoBehaviour
 
     private void Update()
     {
+        lineRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+
         lineRenderer.SetPosition(0, transform.position);
 
         for (int i = 0; i < players.Length; i++)
