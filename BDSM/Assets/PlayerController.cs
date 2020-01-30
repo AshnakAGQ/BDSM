@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
     Animator animator;
-    [SerializeField] Transform aimingCircle;
+    [SerializeField] Transform aimingCircle = null;
 
 
     Vector2 direction;
