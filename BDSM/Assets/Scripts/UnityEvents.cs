@@ -13,6 +13,4 @@ using UnityEngine.Events;
 /// </summary>
 public static class UnityEvents
 {
-    public class AudioClipUnityEvent : UnityEvent<AudioClip> { }
-    public static AudioClipUnityEvent PlaySoundEvent;
 }

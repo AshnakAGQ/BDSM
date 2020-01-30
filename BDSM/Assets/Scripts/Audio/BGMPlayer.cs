@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BGMManager : MonoBehaviour
+public class BGMPlayer : MonoBehaviour
 {
     [SerializeField] string musicFileName = null;
     [SerializeField] float volume = 1.0f;
     [SerializeField] float fadeTime = 1.0f;
 
-    public static BGMManager instance { get; private set; }
+    public static BGMPlayer instance { get; private set; }
     AudioSource m_BGMPlayer;
 
     private void Awake()

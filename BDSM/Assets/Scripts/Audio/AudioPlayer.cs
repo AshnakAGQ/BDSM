@@ -4,39 +4,20 @@ using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour
 {
-
-
-    [SerializeField] int numberOfAudioChannels = 5;
+    // The maximum distance from the AudioSource object that the sound is able to be heard from
     [SerializeField] int soundMaxDistance = 13;
-    //[SerializeField] float spatialRatio = 1.0f; Not Used
-    [SerializeField] GameObject audioChannelPrefab = null;
 
-
+    // Storage of all AudioClip objects ready to be played
     private Dictionary<string, AudioClip> clipStorage = new Dictionary<string, AudioClip>();
-    private List<AudioChannel> audioChannels = new List<AudioChannel>();
-
-
-    void Awake()
-    {
-        // fill the collection with the specified number of AudioChannels
-        audioChannels.Clear();
-        for (int i = 0; i < numberOfAudioChannels; i++)
-        {
-            GameObject temporaryChannelObject = Instantiate(audioChannelPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-            temporaryChannelObject.transform.parent = this.transform;
-            temporaryChannelObject.transform.localPosition = new Vector3(0, 0, 0);
-            AudioChannel temporaryAudioChannel = temporaryChannelObject.GetComponent<AudioChannel>();
-            temporaryAudioChannel.inUse = false;
-            temporaryAudioChannel.setMaxDistance(soundMaxDistance);
-
-            audioChannels.Add(temporaryAudioChannel);
-        }
-    }
 
     // takes a string filename in the path Resources/Audio/SFX
     // loads that audio file into the AudioPlayer's storage
-    public void addSFX(string name)
+    public void loadClip(string name)
     {
+        if (clipStorage.ContainsKey(name))
+        {
+            return;
+        }
         AudioClip newSound = Resources.Load($"Audio/SFX/{name}") as AudioClip;
         if (newSound == null)
         {
@@ -44,7 +25,6 @@ public class AudioPlayer : MonoBehaviour
             return;
         }
         clipStorage.Add(name, newSound);
-
     }
 
     // Finds an available/not-in-use AudioChannel and uses it to play the sound specified by filename
@@ -53,11 +33,12 @@ public class AudioPlayer : MonoBehaviour
     {
         if (!clipStorage.ContainsKey(name))
         {
-            Debug.Log($"The Audio File {name} has not yet been loaded.");
+            Debug.Log($"The Audio File {name} has not been loaded.");
             return;
         }
         else
         {
+            
             for (int i = 0; i < audioChannels.Count; i++)
             {
                 if (!audioChannels[i].inUse)
