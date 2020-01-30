@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
             InteractableObject obj = collision.GetComponent<InteractableObject>();
             if (obj != null)
             {
+                obj.GetComponent<SpriteRenderer>().color = Color.yellow;
                 interactables.Add(obj);
             }
         }
@@ -117,6 +118,7 @@ public class PlayerController : MonoBehaviour
             InteractableObject obj = collision.GetComponent<InteractableObject>();
             if (obj != null)
             {
+                obj.GetComponent<SpriteRenderer>().color = Color.white;
                 interactables.Remove(obj);
             }
         }
