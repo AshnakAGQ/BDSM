@@ -163,7 +163,35 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a297da05-a54a-4bbd-91ff-253b94016ead
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5bd61def-6a15-42cd-af41-b42bfd4abd37
+    m_ActionName: Player/Look
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d71b9c30-b7b2-4240-b819-4e92a3dd655d
+    m_ActionName: Player/LookMouse[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 56328bac-a28f-4a23-ae31-d893f6a7b365
+    m_ActionName: Player/PrimaryAction[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ffc019ba-4a49-496d-8e59-15462c19638b
+    m_ActionName: Player/SecondaryAction[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 573f6654-2b01-49a1-a6ef-5b40e30ab8ef
+    m_ActionName: Player/TertiaryAction[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3b2b174b-72bc-4e59-aab0-37884900afba
+    m_ActionName: Player/Interact[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard and Mouse
   m_DefaultActionMap: Player
