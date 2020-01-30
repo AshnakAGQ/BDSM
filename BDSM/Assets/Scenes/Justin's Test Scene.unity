@@ -3821,15 +3821,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5342754561622566666, guid: cb6070b0e38b4324eaaf70155d919dae,
+    - target: {fileID: 1732755252, guid: cb6070b0e38b4324eaaf70155d919dae, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 875d8fa764d71574c80d9192c2c22986,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5342754561622566666, guid: cb6070b0e38b4324eaaf70155d919dae,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.25
+    - target: {fileID: 1732755252, guid: cb6070b0e38b4324eaaf70155d919dae, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard and Mouse
       objectReference: {fileID: 0}
     - target: {fileID: 6231281964324541852, guid: cb6070b0e38b4324eaaf70155d919dae,
         type: 3}
@@ -3900,16 +3899,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8037681101215809770, guid: cb6070b0e38b4324eaaf70155d919dae,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 8037681101215809770, guid: cb6070b0e38b4324eaaf70155d919dae,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb6070b0e38b4324eaaf70155d919dae, type: 3}

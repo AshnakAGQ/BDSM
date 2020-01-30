@@ -246,7 +246,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
         if (health <= 0)
         {
             m_audioPlayer.playSFX(deathFileName, deathVolume, deathPitchMin, deathPitchMax);
-            UIManager.instance.EndGame(false, "Death");
+            Destroy(this.gameObject);
         }
     }
 
