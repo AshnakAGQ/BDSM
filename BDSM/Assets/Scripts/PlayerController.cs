@@ -10,19 +10,21 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     [SerializeField] Transform aimingCircle = null;
 
-
     Vector2 direction;
     Vector2 lookDirection;
 
     float speed = 5f;
 
     enum Directions { Up, Right, Down, Left }
+    
+    List<InteractableObject> interactables;
 
     private void Awake()
     {
         rigidbody2D = this.GetComponent<Rigidbody2D>();
         collider2D = this.GetComponent<Collider2D>();
         animator = this.GetComponent<Animator>();
+        interactables = new List<InteractableObject>();
     }
 
     private void Update()
@@ -92,6 +94,31 @@ public class PlayerController : MonoBehaviour
 
     void OnInteract(InputValue value)
     {
-        
+        foreach (InteractableObject obj in interactables)
+            obj.Interact();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Interactable"))
+        {
+            InteractableObject obj = collision.GetComponent<InteractableObject>();
+            if (obj != null)
+            {
+                interactables.Add(obj);
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Interactable"))
+        {
+            InteractableObject obj = collision.GetComponent<InteractableObject>();
+            if (obj != null)
+            {
+                interactables.Remove(obj);
+            }
+        }
     }
 }
