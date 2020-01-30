@@ -20,13 +20,13 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
     [SerializeField] GameObject playerArmRight = null;
     [SerializeField] ParticleSystem BloodParticles = null;
 
-    #[SerializeField] Weapon defaultWeapon = null;
+
     public Weapon weapon;
 
     Vector2 Direction;
     Vector2 LookDirection;
     [SerializeField] float speed = 5f;
-    [SerializeField] float rotationSpeed = 5f;
+    [SerializeField] float rotationSpeed = 5f;  
     [SerializeField] float stun = 0;
     [SerializeField] bool faceTarget = true;
 
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
                 SetDefaultWeapon();
             }
 
-            //if (Input.GetKeyDown(KeyCode.Q)) DropWeapon();
+            if (Keyboard.current.qKey.wasPressedThisFrame) DropWeapon();
 
             if (stun > 0) stun -= Time.deltaTime;
 
@@ -108,14 +108,32 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
             {
                 playerTorso.transform.right = LookDirection;
 
-                rigidbody2D.velocity = Direction * speed;
 
-                if (Direction != Vector2.zero)
+                print("x: " + LookDirection.x + "\ny: " + LookDirection.y);
+
+
+                if (LookDirection != Vector2.zero)
                 {
-                    playerLegs.transform.right = Direction;
-                    if (faceTarget && Quaternion.Angle(playerTorso.transform.rotation, playerLegs.transform.rotation) > 90) playerLegs.transform.right = -1 * playerLegs.transform.right; // Keeps body facing mouse
+                    if (System.Math.Abs(LookDirection.y) > System.Math.Abs(LookDirection.x))
+                    {
+                        playerLegs.GetComponent<SpriteRenderer>().sprite = LookDirection.y > 0 ? playerUp : playerDown;
+                    }
+                    else
+                    {
+                        playerLegs.GetComponent<SpriteRenderer>().sprite = LookDirection.x > 0 ? playerRight : playerLeft;
+                    }
                 }
             }
+
+                
+            rigidbody2D.velocity = Direction * speed;
+
+            /*if (Direction != Vector2.zero)
+            {
+                playerLegs.transform.right = Direction;
+                if (faceTarget && Quaternion.Angle(playerTorso.transform.rotation, playerLegs.transform.rotation) > 90) playerLegs.transform.right = -1 * playerLegs.transform.right; // Keeps body facing mouse
+            }
+            */
         }
         //DEBUG
         //Debug.DrawRay(transform.position, playerTorso.transform.right.normalized, Color.red, .01f);
@@ -165,7 +183,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
         if (collider.gameObject.CompareTag("Checkout"))
         {
             message = "Press E or Mouse 2 to Checkout";
-            if (Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.E))
+            if (Mouse.current.rightButton.wasPressedThisFrame  || Keyboard.current.eKey.wasPressedThisFrame)
             {
                 UIManager.instance.EndGame(true, collider.gameObject.name);
                 message = "";
@@ -177,7 +195,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
             if (collider.CompareTag("WeaponGround"))
             {
                 message = "Press E or Mouse 2 to Equip";
-                if (Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.E))
+                if (Mouse.current.rightButton.wasPressedThisFrame || Keyboard.current.eKey.wasPressedThisFrame)
                 {
                     IPickupable itemComponent = collider.GetComponent<IPickupable>();
                     if (itemComponent != null)
