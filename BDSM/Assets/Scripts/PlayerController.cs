@@ -20,7 +20,12 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable
     [SerializeField] GameObject playerArmRight = null;
     [SerializeField] ParticleSystem BloodParticles = null;
 
+    [SerializeField] Sprite playerRight = null;
+    [SerializeField] Sprite playerUp = null;
+    [SerializeField] Sprite playerLeft = null;
+    [SerializeField] Sprite playerDown = null;
 
+    [SerializeField] Weapon defaultWeapon = null;
     public Weapon weapon;
 
     Vector2 Direction;
