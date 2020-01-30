@@ -10,10 +10,7 @@ TagManager:
   - Weapon
   - Wall
   - Enemy
-  - PlayerTorso
-  - Checkout
-  - Gun
-  - WeaponGround
+  - Interactable
   layers:
   - Default
   - TransparentFX
