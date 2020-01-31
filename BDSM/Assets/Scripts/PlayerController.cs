@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
     Animator animator;
+    SpriteRenderer spriteRenderer;
     [SerializeField] Transform aimingCircle = null;
 
     [Header("Sound")]
@@ -27,11 +28,14 @@ public class PlayerController : MonoBehaviour
         rigidbody2D = this.GetComponent<Rigidbody2D>();
         collider2D = this.GetComponent<Collider2D>();
         animator = this.GetComponent<Animator>();
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
         interactables = new List<InteractableObject>();
     }
 
     private void Update()
     {
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+
         if (Time.timeScale == 1)
         {
             // Movement
@@ -108,6 +112,7 @@ public class PlayerController : MonoBehaviour
             InteractableObject obj = collision.GetComponent<InteractableObject>();
             if (obj != null)
             {
+                obj.GetComponent<SpriteRenderer>().color = Color.yellow;
                 interactables.Add(obj);
             }
         }
@@ -120,6 +125,7 @@ public class PlayerController : MonoBehaviour
             InteractableObject obj = collision.GetComponent<InteractableObject>();
             if (obj != null)
             {
+                obj.GetComponent<SpriteRenderer>().color = Color.white;
                 interactables.Remove(obj);
             }
         }
