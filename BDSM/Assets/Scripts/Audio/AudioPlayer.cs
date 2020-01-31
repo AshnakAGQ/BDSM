@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour
 {
-    // The maximum distance from the AudioSource object that the sound is able to be heard from
-    [SerializeField] int soundMaxDistance = 13;
-
     // Storage of all AudioClip objects ready to be played
     private Dictionary<string, AudioClip> clipStorage = new Dictionary<string, AudioClip>();
 
     // takes a string filename in the path Resources/Audio/SFX
     // loads that audio file into the AudioPlayer's storage
-    public void loadClip(string name)
+    public void LoadClip(string name)
     {
         if (clipStorage.ContainsKey(name))
         {
@@ -27,36 +24,35 @@ public class AudioPlayer : MonoBehaviour
         clipStorage.Add(name, newSound);
     }
 
-    // Finds an available/not-in-use AudioChannel and uses it to play the sound specified by filename
-    // audio file must be initially loaded by AudioPlayer.addSFX()
-    public void playSFX(string name, float soundVolume, float minimumPitch, float maximumPitch)
+    // Plays the sound specified by filename
+    // First attempts to load the sound through LoadClip()
+    public void PlaySFX(AudioContainer sound)
     {
-        if (!clipStorage.ContainsKey(name))
+        LoadClip(sound.name);
+        if (clipStorage.ContainsKey(sound.name))
         {
-            Debug.Log($"The Audio File {name} has not been loaded.");
-            return;
-        }
-        else
-        {
-            
-            for (int i = 0; i < audioChannels.Count; i++)
-            {
-                if (!audioChannels[i].inUse)
-                {
-                    audioChannels[i].playSound(clipStorage[name], soundVolume, minimumPitch, maximumPitch);
-                    return;
-                }
-            }
-            Debug.Log("All AudioChannel objects were in use at the time of this function call.");
+            AudioSource tempSource = this.gameObject.AddComponent<AudioSource>();
+            tempSource.volume = sound.volume;
+            tempSource.pitch = Random.Range(sound.pitchMin, sound.pitchMax);
+            tempSource.maxDistance = sound.maxDistance;
+            tempSource.spatialBlend = sound.spatialBlend;
+            StartCoroutine(playSoundCoroutine(sound.name, tempSource));
         }
     }
 
-    public void setSpatialBlend(float ratio)
+    // Plays the AudioClip from the passed string in the clipStorage
+    // Plays the clip through the passed AudioSource, and then deletes the AudioSource
+    private IEnumerator playSoundCoroutine(string clipName, AudioSource audioPlayer)
     {
-        for (int i = 0; i < audioChannels.Count; i++)
-        {
-            audioChannels[i].setSpatialRatio(ratio);
-        }
-    }
+        float timePassed = 0.0f;
+        audioPlayer.PlayOneShot(clipStorage[clipName]);
 
+        while (timePassed < clipStorage[clipName].length)
+        {
+            timePassed += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(audioPlayer);
+    }
 }

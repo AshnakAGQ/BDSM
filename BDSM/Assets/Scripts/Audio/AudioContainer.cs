@@ -5,8 +5,15 @@ using UnityEngine;
 [CreateAssetMenu]
 public class AudioContainer : ScriptableObject
 {
-    [SerializeField] string fileName;
-    [SerializeField] float volume;
-    [SerializeField] float pitchMin;
-    [SerializeField] float pitchMax;
+    [SerializeField] public string fileName;
+
+    [SerializeField] public float volume;
+
+    [SerializeField] public float pitchMin;
+
+    [SerializeField] public float pitchMax;
+
+    [SerializeField] public float spatialBlend;
+
+    [SerializeField] public float maxDistance;
 }

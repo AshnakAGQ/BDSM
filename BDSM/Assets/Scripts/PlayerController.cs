@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     [SerializeField] Transform aimingCircle = null;
 
+    [Header("Sound")]
+    [SerializeField] public AudioContainer footStepClip;
+
     Vector2 direction;
     Vector2 lookDirection;
 
