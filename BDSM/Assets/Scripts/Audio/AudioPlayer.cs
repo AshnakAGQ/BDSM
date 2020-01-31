@@ -7,6 +7,17 @@ public class AudioPlayer : MonoBehaviour
     // Storage of all AudioClip objects ready to be played
     private Dictionary<string, AudioClip> clipStorage = new Dictionary<string, AudioClip>();
 
+    // The number of current live AudioSource objects created by this script
+    private int activeSources;
+
+    // The maximum number of AudioSource objects allowed to be live at once
+    private static int maxSources = 20;
+
+    private void Awake()
+    {
+        activeSources = 0;
+    }
+
     // takes a string filename in the path Resources/Audio/SFX
     // loads that audio file into the AudioPlayer's storage
     public void LoadClip(string name)
@@ -29,8 +40,15 @@ public class AudioPlayer : MonoBehaviour
     public void PlaySFX(AudioContainer sound)
     {
         LoadClip(sound.name);
-        if (clipStorage.ContainsKey(sound.name))
+        if (activeSources >= maxSources)
         {
+            Debug.Log("The maximum number  [" + maxSources + "] of AudioSource Components on object [" + this.gameObject + "] has been reached.");
+            return;
+        }
+        else if (clipStorage.ContainsKey(sound.name))
+        {
+            // create a new AudioSource to use
+            activeSources++;
             AudioSource tempSource = this.gameObject.AddComponent<AudioSource>();
             tempSource.volume = sound.volume;
             tempSource.pitch = Random.Range(sound.pitchMin, sound.pitchMax);
@@ -54,5 +72,6 @@ public class AudioPlayer : MonoBehaviour
         }
 
         Destroy(audioPlayer);
+        activeSources--;
     }
 }
