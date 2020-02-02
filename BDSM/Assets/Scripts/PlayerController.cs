@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     [SerializeField] Transform aimingCircle = null;
 
+    [Header("Sound")]
+    [SerializeField] public AudioContainer footStepClip;
+
     Vector2 direction;
     Vector2 lookDirection;
 
-    float speed = 5f;
+    [SerializeField] float speed = 5f;
 
     enum Directions { Up, Right, Down, Left }
     
