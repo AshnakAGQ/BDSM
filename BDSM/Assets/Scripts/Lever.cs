@@ -15,7 +15,7 @@ public class Lever : InteractableObject
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    private void Start()
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
     }
