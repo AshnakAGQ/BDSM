@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
@@ -15,9 +15,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public AudioContainer footStepClip;
 
     Vector2 direction;
-    Vector2 lookDirection;
+    public Vector2 lookDirection;
 
+    [Header("Stats")]
     [SerializeField] float speed = 5f;
+    float stun = 0;
+    [SerializeField] float maxHealth = 200f;
+    [SerializeField] float health = 100f;
+    bool alive = true;
 
     enum Directions { Up, Right, Down, Left }
     
@@ -36,34 +41,38 @@ public class PlayerController : MonoBehaviour
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
 
-        if (Time.timeScale == 1)
+        if (Time.timeScale == 1 && alive)
         {
-            // Movement
-            rigidbody2D.velocity = direction * speed;
-
-            if (direction != Vector2.zero)
-                animator.SetBool("moving", true);
+            if (stun > 0) stun -= Time.deltaTime;
             else
-                animator.SetBool("moving", false);
-
-            // Aiming
-            if (lookDirection != Vector2.zero)
             {
-                aimingCircle.right = lookDirection;
+                // Movement
+                rigidbody2D.velocity = direction * speed;
 
-                if (System.Math.Abs(lookDirection.y) > System.Math.Abs(lookDirection.x))
-                {
-                    if ( lookDirection.y > 0)
-                        animator.SetInteger("direction", (int) Directions.Up);
-                    else
-                        animator.SetInteger("direction", (int) Directions.Down);
-                }
+                if (direction != Vector2.zero)
+                    animator.SetBool("moving", true);
                 else
+                    animator.SetBool("moving", false);
+
+                // Aiming
+                if (lookDirection != Vector2.zero)
                 {
-                    if (lookDirection.x > 0)
-                        animator.SetInteger("direction", (int) Directions.Right);
+                    aimingCircle.right = lookDirection;
+
+                    if (System.Math.Abs(lookDirection.y) > System.Math.Abs(lookDirection.x))
+                    {
+                        if (lookDirection.y > 0)
+                            animator.SetInteger("direction", (int)Directions.Up);
+                        else
+                            animator.SetInteger("direction", (int)Directions.Down);
+                    }
                     else
-                        animator.SetInteger("direction", (int) Directions.Left);
+                    {
+                        if (lookDirection.x > 0)
+                            animator.SetInteger("direction", (int)Directions.Right);
+                        else
+                            animator.SetInteger("direction", (int)Directions.Left);
+                    }
                 }
             }
         }
@@ -84,25 +93,13 @@ public class PlayerController : MonoBehaviour
         lookDirection = (Vector2)(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
     }
 
-    void OnPrimaryAction(InputValue value)
-    {
-        
-    }
-
-    void OnSecondaryAction(InputValue value)
-    {
-        
-    }
-
-    void OnTertiaryAction(InputValue value)
-    {
-        
-    }
-
     void OnInteract(InputValue value)
     {
-        foreach (InteractableObject obj in interactables)
-            obj.Interact();
+        if (Time.timeScale == 1 && alive && stun <= 0)
+        {
+            foreach (InteractableObject obj in interactables)
+                obj.Interact();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -128,6 +125,24 @@ public class PlayerController : MonoBehaviour
                 obj.GetComponent<SpriteRenderer>().color = Color.white;
                 interactables.Remove(obj);
             }
+        }
+    }
+
+    public void Damage(float damage, float stun, Vector2 knockback)
+    {
+        if (health > 0)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.AddForce(knockback);
+            health -= damage;
+            this.stun = stun;
+        }
+        if (alive && health <= 0)
+        {
+            health = 0;
+            alive = false;
+            rigidbody2D.bodyType = RigidbodyType2D.Static;
+            transform.right = -transform.up;
         }
     }
 }
