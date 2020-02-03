@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Lever : InteractableObject
 {
-    [SerializeField] ActivatableObject target;
+    [SerializeField] ActivatableObject target = null;
     Animator animator;
     bool activated = false;
     SpriteRenderer spriteRenderer;
