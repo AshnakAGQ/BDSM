@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff9664227ee71d43bb48b508b5b6685, type: 3}
   m_Name: FootStep
   m_EditorClassIdentifier: 
-  fileName: 
-  volume: 0
-  pitchMin: 0
-  pitchMax: 0
+  clip: {fileID: 8300000, guid: 9c0b55792e5452f4db61ec6e5b05abe2, type: 3}
+  volume: 0.3
+  pitchMin: 0.9
+  pitchMax: 1.1
   spatialBlend: 0
-  maxDistance: 0
+  maxDistance: 13

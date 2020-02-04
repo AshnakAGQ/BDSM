@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimingCircle: {fileID: 6711885800294019530}
-  footStepClip: {fileID: 11400000, guid: f815c11887f52f14e936c9f9fd445cac, type: 2}
   lookDirection: {x: 0, y: 0}
+  footStepClip: {fileID: 11400000, guid: 32081bd53d92c884ca75fdd264b7c8bc, type: 2}
   speed: 5
   maxHealth: 200
   health: 200

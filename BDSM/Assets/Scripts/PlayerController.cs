@@ -9,13 +9,14 @@ public class PlayerController : MonoBehaviour, IDamageable
     new Collider2D collider2D;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    private AudioPlayer audioPlayer;
     [SerializeField] Transform aimingCircle = null;
-
-    [Header("Sound")]
-    [SerializeField] public AudioContainer footStepClip;
 
     Vector2 direction;
     public Vector2 lookDirection;
+
+    [Header("Sound")]
+    [SerializeField] public AudioContainer footStepClip;
 
     [Header("Stats")]
     [SerializeField] float speed = 5f;
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         collider2D = this.GetComponent<Collider2D>();
         animator = this.GetComponent<Animator>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
+        audioPlayer = this.GetComponent<AudioPlayer>();
         interactables = new List<InteractableObject>();
     }
 
@@ -50,7 +52,14 @@ public class PlayerController : MonoBehaviour, IDamageable
                 rigidbody2D.velocity = direction * speed;
 
                 if (direction != Vector2.zero)
+                {
                     animator.SetBool("moving", true);
+
+                    if (!audioPlayer.ActiveSounds.ContainsKey(footStepClip))
+                    {
+                        audioPlayer.PlaySFX(footStepClip);
+                    }
+                }
                 else
                     animator.SetBool("moving", false);
 

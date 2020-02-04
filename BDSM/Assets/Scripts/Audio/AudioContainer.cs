@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class AudioContainer : ScriptableObject
 {
-    [Tooltip("The name of the filename of the clip in Assets/Resources/Audio/SFX\n\nExample: FootStep.wav")]
-    [SerializeField] public string fileName;
+    [Tooltip("The file of the sound to be played")]
+    [SerializeField] public AudioClip clip;
 
     [Tooltip("Proportion of the volume of the sound played")]
     [Range(0.0f, 1.0f)]
