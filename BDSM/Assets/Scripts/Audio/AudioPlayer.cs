@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour
 {
-    // Storage of all AudioClip objects ready to be played
-    private Dictionary<string, AudioClip> clipStorage = new Dictionary<string, AudioClip>();
+    // storage of all actively playing Sounds
+    [System.NonSerialized] public Dictionary<AudioContainer, int> ActiveSounds;
 
     // The number of current live AudioSource objects created by this script
     private int activeSources;
@@ -16,56 +16,40 @@ public class AudioPlayer : MonoBehaviour
     private void Awake()
     {
         activeSources = 0;
-    }
-
-    // takes a string filename in the path Resources/Audio/SFX
-    // loads that audio file into the AudioPlayer's storage
-    public void LoadClip(string name)
-    {
-        if (clipStorage.ContainsKey(name))
-        {
-            return;
-        }
-        AudioClip newSound = Resources.Load($"Audio/SFX/{name}") as AudioClip;
-        if (newSound == null)
-        {
-            Debug.Log($"Audio File not successfully loaded. The file named {name} likely does not exist in Resources/Audio/SFX");
-            return;
-        }
-        clipStorage.Add(name, newSound);
+        ActiveSounds = new Dictionary<AudioContainer, int>();
     }
 
     // Plays the sound specified by filename
     // First attempts to load the sound through LoadClip()
     public void PlaySFX(AudioContainer sound)
     {
-        LoadClip(sound.name);
         if (activeSources >= maxSources)
         {
             Debug.Log("The maximum number  [" + maxSources + "] of AudioSource Components on object [" + this.gameObject + "] has been reached.");
             return;
         }
-        else if (clipStorage.ContainsKey(sound.name))
+        else
         {
             // create a new AudioSource to use
             activeSources++;
+            addSound(sound);
             AudioSource tempSource = this.gameObject.AddComponent<AudioSource>();
             tempSource.volume = sound.volume;
             tempSource.pitch = Random.Range(sound.pitchMin, sound.pitchMax);
             tempSource.maxDistance = sound.maxDistance;
             tempSource.spatialBlend = sound.spatialBlend;
-            StartCoroutine(playSoundCoroutine(sound.name, tempSource));
+            StartCoroutine(playSoundCoroutine(sound, tempSource));
         }
     }
 
     // Plays the AudioClip from the passed string in the clipStorage
     // Plays the clip through the passed AudioSource, and then deletes the AudioSource
-    private IEnumerator playSoundCoroutine(string clipName, AudioSource audioPlayer)
+    private IEnumerator playSoundCoroutine(AudioContainer container, AudioSource audioPlayer)
     {
         float timePassed = 0.0f;
-        audioPlayer.PlayOneShot(clipStorage[clipName]);
+        audioPlayer.PlayOneShot(container.clip);
 
-        while (timePassed < clipStorage[clipName].length)
+        while (timePassed < container.clip.length)
         {
             timePassed += Time.deltaTime;
             yield return null;
@@ -73,5 +57,33 @@ public class AudioPlayer : MonoBehaviour
 
         Destroy(audioPlayer);
         activeSources--;
+        removeSound(container);
+    }
+
+
+    // Adds a counter to the activeSounds storage
+    private void addSound(AudioContainer sound)
+    {
+        if (ActiveSounds.ContainsKey(sound))
+        {
+            ActiveSounds[sound]++;
+        }
+        else
+        {
+            ActiveSounds[sound] = 1;
+        }
+    }
+
+    // Removes a counter to the activeSounds storage, removes the key if the counter reaches 0
+    private void removeSound(AudioContainer sound)
+    {
+        if (ActiveSounds.ContainsKey(sound))
+        {
+            ActiveSounds[sound]--;
+            if (ActiveSounds[sound] <= 0)
+            {
+                ActiveSounds.Remove(sound);
+            }
+        }
     }
 }

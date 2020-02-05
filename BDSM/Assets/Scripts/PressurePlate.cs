@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
-    [SerializeField] ActivatableObject target;
+    [SerializeField] ActivatableObject target = null;
     SpriteRenderer spriteRenderer;
     int triggerCount = 0;
 
