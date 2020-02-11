@@ -20,6 +20,16 @@ public class Rope : MonoBehaviour
         lineRenderer.positionCount = 2 * players.Length + 1;
     }
 
+    private void OnEnable()
+    {
+        PlayerController.PitEvent.AddListener(shrinkRope);
+    }
+
+    private void OnDisable()
+    {
+        PlayerController.PitEvent.RemoveAllListeners();
+    }
+
     private void Update()
     {
         lineRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
@@ -56,8 +66,36 @@ public class Rope : MonoBehaviour
                 float halfPoint = (centerDistance - length / players.Length) / (players.Length * centerDistance);
                 foreach (GameObject player in players)
                 {
-                    player.transform.position = Vector2.Lerp(player.transform.position, center, halfPoint);
+                    PlayerController controller = player.GetComponent<PlayerController>();
+                    if (controller != null && !controller.falling) // Players only get affected by the rope if they are not falling
+                    {
+                        player.transform.position = Vector2.Lerp(player.transform.position, center, halfPoint);
+                    }
                 }
+            }
+        }
+    }
+
+    private void shrinkRope(GameObject caller)
+    {
+        StartCoroutine(shrinkRopeCoroutine(caller));
+    }
+
+    // After making sure that the caller is indeed an object tied to this rope, shrink the rope until it is size 0
+    // This will pull the other players in to have them fall as well
+    private IEnumerator shrinkRopeCoroutine(GameObject caller)
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i] == caller)
+            {
+                while (length > 0)
+                {
+                    length -= 0.1f;
+                    yield return null;
+                }
+                length = 0.0f;
+                lineRenderer.enabled = false;
             }
         }
     }

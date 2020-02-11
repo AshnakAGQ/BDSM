@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Pit : MonoBehaviour
 {
+    [Tooltip("Indicates the rate at which things fall into the pit.\nA lower value is slower, and vice - versa")]
     [SerializeField] public float fallingRate;
 
     private Collider2D m_Collider2D;
