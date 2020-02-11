@@ -154,4 +154,16 @@ public class PlayerController : MonoBehaviour, IDamageable
             transform.right = -transform.up;
         }
     }
+
+    public void Heal(float healthDelta)
+    {
+        float newHealthValue = health + healthDelta;
+        if (newHealthValue > maxHealth)
+            health = maxHealth;
+        else
+            health = newHealthValue;
+        //SetHealthUI();
+
+        //m_audioPlayer.playSFX(healFileName, healVolume, healPitchMin, healPitchMax);
+    }
 }
