@@ -57,6 +57,9 @@ TagManager:
   - name: Foreground
     uniqueID: 353224977
     locked: 0
+  - name: Blood
+    uniqueID: 1013120791
+    locked: 0
   - name: UI
     uniqueID: 547137113
     locked: 0
