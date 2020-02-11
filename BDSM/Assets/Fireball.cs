@@ -26,15 +26,27 @@ public class Fireball : MonoBehaviour
 
     public Vector2 Target { get => target; set => target = value; }
 
+    [SerializeField] public AudioContainer fireballSound;
+    AudioPlayer m_AudioPlayer;
+
     private void Awake()
     {
+        m_AudioPlayer = this.GetComponent<AudioPlayer>();
+
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         collider2D = GetComponent<Collider2D>();
         damaged = new List<IDamageable>();
+
+       
     }
-    
+
+    private void Start()
+    {
+        m_AudioPlayer.PlaySFX(fireballSound);
+    }
+
     private void Update()
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;

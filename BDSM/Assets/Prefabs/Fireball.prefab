@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2638678283289825593}
   - component: {fileID: 2638678283289825592}
   - component: {fileID: 2638678283289825607}
+  - component: {fileID: 8222758908909872094}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -123,6 +124,7 @@ MonoBehaviour:
   stun: 0.5
   knockback: 100
   areaOfEffect: 3
+  fireballSound: {fileID: 11400000, guid: d23f83a3911f1274ba4236a9209b2763, type: 2}
 --- !u!50 &2638678283289825592
 Rigidbody2D:
   serializedVersion: 4
@@ -160,3 +162,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.31237704
+--- !u!114 &8222758908909872094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2638678283289825603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d4bd1bb71e73f47a3bb1b4c56589b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
