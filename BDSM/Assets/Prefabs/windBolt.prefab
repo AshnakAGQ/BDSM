@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2638678283289825592}
   - component: {fileID: 2638678283289825607}
   m_Layer: 0
-  m_Name: Fireball
+  m_Name: windBolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ef9ad287c83bcf4d8c5aa694228d4ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09e93031cd06a7f4caf8a4da91ab4a1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -118,11 +118,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0}
   animTime: 30
-  speed: 5
-  damage: 30
-  stun: 0.5
-  knockback: 100
-  areaOfEffect: 3
+  speed: 10
+  damage: 10
+  stun: 1
+  knockback: 150
+  areaOfEffect: 5
+  fireballSound: {fileID: 0}
 --- !u!50 &2638678283289825592
 Rigidbody2D:
   serializedVersion: 4
