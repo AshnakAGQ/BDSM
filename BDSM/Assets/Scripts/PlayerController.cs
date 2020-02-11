@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IDamageable
+public class PlayerController : MonoBehaviour, IDamageable, IMassive
 {
     new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
@@ -165,5 +165,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         //SetHealthUI();
 
         //m_audioPlayer.playSFX(healFileName, healVolume, healPitchMin, healPitchMax);
+    }
+
+    public void Fall(float fallingRate)
+    {
+        this.transform.position +=  new Vector3(0, 0, ((-1) * fallingRate));
     }
 }
