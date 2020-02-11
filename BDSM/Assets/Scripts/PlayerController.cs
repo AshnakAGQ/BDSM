@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IDamageable
+public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 {
     new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
@@ -24,10 +24,13 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] float maxHealth = 200f;
     [SerializeField] float health = 100f;
     bool alive = true;
+    [System.NonSerialized] public bool falling = false;
 
     enum Directions { Up, Right, Down, Left }
     
     List<InteractableObject> interactables;
+
+    public static GameObjectUnityEvent PitEvent = new GameObjectUnityEvent();
 
     private void Awake()
     {
@@ -46,7 +49,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (Time.timeScale == 1 && alive)
         {
             if (stun > 0) stun -= Time.deltaTime;
-            else
+            else if (!falling)
             {
                 // Movement
                 rigidbody2D.velocity = direction * speed;
@@ -63,6 +66,10 @@ public class PlayerController : MonoBehaviour, IDamageable
                 else
                     animator.SetBool("moving", false);
 
+                
+            }
+            if (!(stun > 0))
+            {
                 // Aiming
                 if (lookDirection != Vector2.zero)
                 {
@@ -165,5 +172,27 @@ public class PlayerController : MonoBehaviour, IDamageable
         //SetHealthUI();
 
         //m_audioPlayer.playSFX(healFileName, healVolume, healPitchMin, healPitchMax);
+    }
+
+    public void Fall(float fallingRate)
+    {
+        if (!falling)
+        {
+            rigidbody2D.velocity = Vector2.zero; // Stop moving around, you're falling in a pit!
+            falling = true;
+            PitEvent.Invoke(this.gameObject); // Tell the rope to start shrinking and tugging on the other players
+            StartCoroutine(fallCoroutine(fallingRate));
+        }
+    }
+
+    private IEnumerator fallCoroutine(float fallingRate)
+    {
+        Vector3 fallingModifier = new Vector3(-0.1f, -0.1f, -0.1f);
+        while (this.transform.localScale.x > 0 && this.transform.localScale.y > 0 && this.transform.localScale.z > 0)
+        {
+            this.transform.localScale += (fallingRate * fallingModifier); // slowly shrink the scale of the object until it disappears
+            yield return null;
+        }
+        spriteRenderer.enabled = false;
     }
 }
