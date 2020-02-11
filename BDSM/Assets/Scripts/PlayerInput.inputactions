@@ -43,7 +43,7 @@
                     "id": "ffc019ba-4a49-496d-8e59-15462c19638b",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "TertiaryAction",

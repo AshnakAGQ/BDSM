@@ -6,6 +6,17 @@ using UnityEngine.InputSystem;
 public class WarriorController : MonoBehaviour
 {
     [SerializeField] Transform aimingCircle = null;
+    Animator animator;
+
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+    }
 
     void OnPrimaryAction(InputValue value)
     {
@@ -14,7 +25,7 @@ public class WarriorController : MonoBehaviour
 
     void OnSecondaryAction(InputValue value)
     {
-
+        animator.SetBool("blocking", (value.isPressed ? true : false));
     }
 
     void OnTertiaryAction(InputValue value)

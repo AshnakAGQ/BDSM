@@ -435,6 +435,101 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &893923200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 893923201}
+  - component: {fileID: 893923202}
+  - component: {fileID: 893923203}
+  m_Layer: 0
+  m_Name: Shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &893923201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893923200}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.4, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2064148779}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!212 &893923202
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893923200}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 55d2c83303a151f479e521fb9c0edfc3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &893923203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893923200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660e6346cea35eb4aab2e5b8bf2e1d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1600016658}
 --- !u!1 &1052700010
 GameObject:
   m_ObjectHideFlags: 0
@@ -7266,6 +7361,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1600016658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5740874676475642017, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1848430709}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e52be596bbdc8f42b0520296b3f3ae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1623908906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7350,7 +7457,7 @@ PrefabInstance:
     - target: {fileID: 6711885800270649704, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
         type: 3}
       propertyPath: m_DefaultControlScheme
-      value: Keyboard and Mouse
+      value: Gamepad
       objectReference: {fileID: 0}
     - target: {fileID: 6711885800270649706, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
         type: 3}
@@ -7421,6 +7528,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 934260687637658193, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+        type: 3}
+      propertyPath: defaultAnim
+      value: 
+      objectReference: {fileID: 9100000, guid: 8b9bddfaadcdf5c4f905937b858726ca, type: 2}
+    - target: {fileID: 934260687637658193, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+        type: 3}
+      propertyPath: blockAnim
+      value: 
+      objectReference: {fileID: 9100000, guid: c068e61312727874fb2517ceca23bc1f, type: 2}
     - target: {fileID: 5569942881905994720, guid: 40addd9316c0e7a4c867bb764b14a8d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7481,6 +7598,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Warrior
       objectReference: {fileID: 0}
+    - target: {fileID: 5569942881905994723, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5126302944624299044, guid: 88892c58517d9324fac121508a1a520e,
+        type: 3}
     - target: {fileID: 5569942881905994732, guid: 40addd9316c0e7a4c867bb764b14a8d9,
         type: 3}
       propertyPath: m_UIInputModule
@@ -7489,7 +7612,27 @@ PrefabInstance:
     - target: {fileID: 5569942881905994732, guid: 40addd9316c0e7a4c867bb764b14a8d9,
         type: 3}
       propertyPath: m_DefaultControlScheme
-      value: Gamepad
+      value: Keyboard and Mouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 5569942881905994733, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 8b9bddfaadcdf5c4f905937b858726ca, type: 2}
+    - target: {fileID: 5569942882035411332, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5569942882035411332, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5569942882035411333, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40addd9316c0e7a4c867bb764b14a8d9, type: 3}
@@ -7689,6 +7832,12 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!4 &2064148779 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5569942882035411332, guid: 40addd9316c0e7a4c867bb764b14a8d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1848430709}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5062193063193579487
 PrefabInstance:
   m_ObjectHideFlags: 0
