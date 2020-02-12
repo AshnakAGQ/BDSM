@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     private AudioPlayer audioPlayer;
     [SerializeField] Transform aimingCircle = null;
 
-    Vector2 direction;
+    public Vector2 direction;
     public Vector2 lookDirection;
 
     [Header("Sound")]
@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     public static GameObjectUnityEvent PitEvent = new GameObjectUnityEvent();
 
     public float Speed { get => speed; set => speed = value; }
+    public float Stun { get => stun; }
 
     private void Awake()
     {

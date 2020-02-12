@@ -5,12 +5,13 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
-    [SerializeField] PlayerController player = null;
+    PlayerController player;
     
     // Start is called before the first frame update
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        player = GetComponentInParent<PlayerController>();
     }
 
     // Update is called once per frame
