@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Pause_menu : MonoBehaviour
 {
-    public Pause_menu instance = null;
+    public static Pause_menu instance = null;
     public GameObject pause_menu;
     public GameObject resume_button;
     public GameObject menu_button;
@@ -29,13 +29,12 @@ public class Pause_menu : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        checkEscapePause();
+    { 
     }
 
     public void Pause(bool enable)
     {
-        if (!enable)
+        if (enable)
         {
             Time.timeScale = 0;
         }
@@ -44,24 +43,9 @@ public class Pause_menu : MonoBehaviour
             Time.timeScale = 1;
         }
         pause_menu.SetActive(enable);
-        paused = true;
+        paused = enable;
     }
 
-    private void checkEscapePause()
-    {
-        if (Input.GetKeyDown("escape") && !paused)
-        {
-            Time.timeScale = 0;
-            pause_menu.SetActive(true);
-            paused = true;
-        }
-        else if (Input.GetKeyDown("escape"))
-        {
-            Time.timeScale = 1;
-            pause_menu.SetActive(false);
-            paused = false;
-        }
-    }
 
     public void checkResumeButton(InputValue value)
     {
