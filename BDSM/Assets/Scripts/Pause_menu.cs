@@ -8,9 +8,7 @@ public class Pause_menu : MonoBehaviour
 {
     public static Pause_menu instance = null;
     public GameObject pause_menu;
-    public GameObject resume_button;
-    public GameObject menu_button;
-    public GameObject exit_button;
+    public Button resume_button, menu_button, exit_button;
     private bool paused;
 
     void Awake()
@@ -24,12 +22,14 @@ public class Pause_menu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        resume_button.onClick.AddListener(Temp);
         paused = false;
     }
 
     // Update is called once per frame
     void Update()
     { 
+        
     }
 
     public void Pause(bool enable)
@@ -46,8 +46,12 @@ public class Pause_menu : MonoBehaviour
         paused = enable;
     }
 
+    void Temp()
+    {
+        Debug.Log("hey");
+    }
 
-    public void checkResumeButton(InputValue value)
+    public void Resume()
     {
         if(paused)
         {
