@@ -8,7 +8,7 @@ public class Pause_menu : MonoBehaviour
 {
     public static Pause_menu instance = null;
     public GameObject pause_menu;
-    public GameObject resume_button;
+    public Button resume_button;
     public GameObject menu_button;
     public GameObject exit_button;
     private bool paused;
@@ -30,6 +30,7 @@ public class Pause_menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
+        
     }
 
     public void Pause(bool enable)
@@ -49,6 +50,7 @@ public class Pause_menu : MonoBehaviour
 
     public void checkResumeButton(InputValue value)
     {
+        
         if(paused)
         {
             Time.timeScale = 1;
