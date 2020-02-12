@@ -27,7 +27,7 @@ public class MageController : MonoBehaviour
 
     void OnPrimaryAction(InputValue value)
     {
-        if (Time.timeScale == 1 && fireball != null && primaryTimer <= 0)
+        if (playerController.Alive && Time.timeScale == 1 && fireball != null && primaryTimer <= 0)
         {
             Fireball ball = Instantiate(fireball, transform.position + aimingCircle.right, aimingCircle.rotation).GetComponent<Fireball>();
             ball.Target = targetingReticle.position;
