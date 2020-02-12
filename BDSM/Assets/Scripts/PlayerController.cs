@@ -128,6 +128,15 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         Pause_menu.instance.Pause(Time.timeScale == 1);
     }
 
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        IPickupable itemComponent = collider.GetComponent<IPickupable>();
+        if (itemComponent != null)
+        {
+            itemComponent.pickUp();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Interactable"))
