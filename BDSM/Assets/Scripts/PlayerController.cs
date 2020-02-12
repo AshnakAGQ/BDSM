@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     public static GameObjectUnityEvent PitEvent = new GameObjectUnityEvent();
 
+    public float Speed { get => speed; set => speed = value; }
+
     private void Awake()
     {
         rigidbody2D = this.GetComponent<Rigidbody2D>();
