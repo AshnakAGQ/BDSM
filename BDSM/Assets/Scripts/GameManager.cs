@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
     public int score { get; private set; } = 0;
 
+
     [Header("Sound")]
     [SerializeField] public AudioContainer goldPickup;
     AudioPlayer m_AudioPlayer;
