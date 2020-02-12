@@ -97,7 +97,7 @@ public class EnemyController : MonoBehaviour, IDamageable
                 {
                     // Attack Range
                     RaycastHit2D hit = Physics2D.Raycast(this.transform.position, vectorToPlayer, AttackRange);
-                    if (hit && hit.collider.CompareTag("Player"))
+                    if (hit && hit.collider.CompareTag("Player") && hit.collider.gameObject == target.gameObject)
                     {
                         // ANIMATE ATTACK HERE
                         IDamageable damageComponent = target.GetComponent<IDamageable>();
