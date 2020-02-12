@@ -25,7 +25,10 @@ public class WarriorController : MonoBehaviour
 
     void OnSecondaryAction(InputValue value)
     {
-        animator.SetBool("blocking", (value.isPressed ? true : false));
+        if (Time.timeScale == 1)
+        {
+            animator.SetBool("blocking", (value.isPressed ? true : false));
+        }
     }
 
     void OnTertiaryAction(InputValue value)

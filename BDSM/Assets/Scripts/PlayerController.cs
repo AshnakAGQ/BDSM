@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         audioPlayer = this.GetComponent<AudioPlayer>();
         interactables = new List<InteractableObject>();
     }
+   
 
     private void Update()
     {
@@ -116,6 +117,11 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             foreach (InteractableObject obj in interactables)
                 obj.Interact();
         }
+    }
+
+    void OnPause(InputValue value)
+    {
+        Time.timeScale = Time.timeScale == 0 ? 1 : 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
