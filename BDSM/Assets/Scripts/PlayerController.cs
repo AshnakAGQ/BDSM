@@ -130,12 +130,16 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     void OnPause(InputValue value)
     {
-        Pause_menu.instance.Pause(Time.timeScale == 1);
+        if (Pause_menu.instance != null)
+        {
+            Pause_menu.instance.Pause(Time.timeScale == 1);
+        }
+
     }
 
     void OnContinue(InputValue value)
     {
-        if(gameOverMenu.activeSelf)
+        if(gameOverMenu != null && gameOverMenu.activeSelf)
         {
            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
