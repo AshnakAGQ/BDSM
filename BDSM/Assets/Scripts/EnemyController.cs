@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, IDamageable
+public class EnemyController : MonoBehaviour, IDamageable, IMassive
 {
     [Header("Components")]
     new Rigidbody2D rigidbody2D;
@@ -205,5 +205,23 @@ public class EnemyController : MonoBehaviour, IDamageable
         {
             touchingPlayer = false;
         }
+    }
+
+
+    public void Fall(float fallingRate)
+    {
+        rigidbody2D.velocity = Vector2.zero; // Stop moving around, you're falling in a pit!
+        StartCoroutine(fallCoroutine(fallingRate));
+    }
+
+    private IEnumerator fallCoroutine(float fallingRate)
+    {
+        Vector3 fallingModifier = new Vector3(-0.1f, -0.1f, -0.1f);
+        while (this.transform.localScale.x > 0 && this.transform.localScale.y > 0 && this.transform.localScale.z > 0)
+        {
+            this.transform.localScale += (fallingRate * fallingModifier); // slowly shrink the scale of the object until it disappears
+            yield return null;
+        }
+        Destroy(this.gameObject);
     }
 }
