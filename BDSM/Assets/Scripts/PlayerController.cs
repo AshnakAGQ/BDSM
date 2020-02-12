@@ -331,5 +331,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             yield return null;
         }
         spriteRenderer.enabled = false;
+        alive = false;
+        playerDies.Invoke();
     }
 }
