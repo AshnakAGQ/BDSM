@@ -88,6 +88,15 @@ public class Fireball : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
+        if (collision.collider.CompareTag("Shield"))
+        {
+            IDamageable warrior = collision.collider.GetComponentInParent<IDamageable>();
+            if (warrior != null)
+            {
+                damaged.Add(warrior);
+            }
+        }
+
         IDamageable damageableComponent = collision.collider.GetComponent<IDamageable>();
 
         if (damageableComponent != null && !damaged.Contains(damageableComponent))
