@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 {
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     public Vector2 lookDirection;
 
     public GameObject pauseMenu;
+    public GameObject gameOverMenu;
 
     [Header("Sound")]
     [SerializeField] public AudioContainer footStepClip;
@@ -126,6 +128,14 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     void OnPause(InputValue value)
     {
         Pause_menu.instance.Pause(Time.timeScale == 1);
+    }
+
+    void OnContinue(InputValue value)
+    {
+        if(gameOverMenu.activeSelf)
+        {
+           SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     void OnTriggerStay2D(Collider2D collider)
