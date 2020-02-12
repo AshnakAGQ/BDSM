@@ -59,7 +59,7 @@
                     "id": "3b2b174b-72bc-4e59-aab0-37884900afba",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "Pause",

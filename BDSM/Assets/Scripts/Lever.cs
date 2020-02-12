@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : InteractableObject
+public class Lever : MonoBehaviour, IInteractable
 {
     [SerializeField] ActivatableObject target = null;
     Animator animator;
@@ -20,7 +20,7 @@ public class Lever : InteractableObject
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
     }
 
-    public override void Interact()
+    public void Interact()
     {
         if (!activated)
         {
