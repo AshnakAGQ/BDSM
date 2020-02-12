@@ -33,7 +33,10 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
     PlayerController target = null;
     float distanceToTarget = float.PositiveInfinity;
 
-
+    //Animation Variables
+    enum Directions { Up, Right, Down, Left }
+    public Vector2 direction;
+    public Vector2 lookDirection;
 
     void Awake()
     {
@@ -52,10 +55,11 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
     {
         if (Time.timeScale == 1)
         {
-            //if (animator)
-            //{
-            //    animator.SetFloat("Speed", Mathf.Abs(this.rigidbody2D.velocity.x) + Mathf.Abs(this.rigidbody2D.velocity.y));
-            //}
+            if (animator)
+            {
+                direction = rigidbody2D.velocity;
+                if(rigidbody2D.velocity != Vector2.zero) lookDirection = rigidbody2D.velocity;
+            }
 
             bool foundTarget = false;
             foreach(PlayerController player in players)
@@ -67,7 +71,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
                 // Sight Cone
                 if (player.Alive && distanceToPlayer < range && distanceToPlayer < distanceToTarget &&
-                    Vector3.Angle(vectorToPlayer, this.transform.right) < viewAngle &&
+                    Vector3.Angle(vectorToPlayer, lookDirection) < viewAngle &&
                     hit && hit.collider.CompareTag("Player"))
                 {
                     foundTarget = true;
@@ -87,7 +91,6 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                 followingPlayer = true;
 
                 Vector2 vectorToPlayer = target.transform.position - transform.position;
-                this.transform.right = (Vector2)(vectorToPlayer);
 
                 if (stun > 0)
                 {
@@ -95,6 +98,25 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                 }
                 else
                 {
+                    //animation
+                    if (animator)
+                    {
+                        if (System.Math.Abs(lookDirection.y) > System.Math.Abs(lookDirection.x))
+                        {
+                            if (lookDirection.y > 0)
+                                animator.SetInteger("direction", (int)Directions.Up);
+                            else
+                                animator.SetInteger("direction", (int)Directions.Down);
+                        }
+                        else
+                        {
+                            if (lookDirection.x > 0)
+                                animator.SetInteger("direction", (int)Directions.Right);
+                            else
+                                animator.SetInteger("direction", (int)Directions.Left);
+                        }
+                    }
+                    
                     // Attack Range
                     RaycastHit2D hit = Physics2D.Raycast(this.transform.position, vectorToPlayer, AttackRange);
                     if (hit && hit.collider.CompareTag("Player") && hit.collider.gameObject == target.gameObject)
@@ -113,8 +135,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
                     if (!touchingPlayer && Vector3.Distance(target.transform.position, transform.position) > AttackRange)
                     {
-                        rigidbody2D.velocity = this.transform.right.normalized * speed;
-                        this.transform.right = rigidbody2D.velocity;
+                        rigidbody2D.velocity = vectorToPlayer.normalized * speed;
                     }
                 }
                 
@@ -139,8 +160,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                     if (action < movementChance)
                     {
                         timeLeft = movementTime;
-                        this.transform.right = Random.insideUnitCircle;
-                        rigidbody2D.velocity = this.transform.right.normalized * speed;
+                        rigidbody2D.velocity = Random.insideUnitCircle * speed;
                     }
                     else
                     {
@@ -166,7 +186,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
         rigidbody2D.AddForce(knockback);
 
         // Face Attacker
-        this.transform.right = -knockback;
+        lookDirection = -knockback;
 
         health -= damage;
         this.stun = stun;
@@ -184,15 +204,13 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
         if (acting && !followingPlayer && rigidbody2D.velocity != Vector2.zero)
         {
-            this.transform.right = Quaternion.Euler(0, 0, Random.Range(-blockedReverseAngle, blockedReverseAngle) / 2) * -this.transform.right;
-            rigidbody2D.velocity = this.transform.right.normalized * speed;
+            rigidbody2D.velocity = lookDirection.normalized * speed;
         }
 
         if (collision.collider.CompareTag("Player"))
         {
             Vector2 vectorToPlayer = collision.gameObject.transform.position - this.transform.position;
 
-            this.transform.right = vectorToPlayer;
             rigidbody2D.velocity = Vector2.zero;
 
             touchingPlayer = true;
