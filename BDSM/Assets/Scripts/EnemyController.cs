@@ -14,6 +14,9 @@ public class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] float viewAngle = 45f;
     [SerializeField] float speed = 5f;
     [SerializeField] float health = 100f;
+    [SerializeField] float attackDamage = 15.0f;
+    [SerializeField] float attackStun = 0.5f;
+    [SerializeField] int knockbackMultiplier = 100;
     float stun = 0;
 
     [Header("AITweaks")]
@@ -45,14 +48,14 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Time.timeScale == 1)
         {
-            if (animator)
-            {
-                animator.SetFloat("Speed", Mathf.Abs(this.rigidbody2D.velocity.x) + Mathf.Abs(this.rigidbody2D.velocity.y));
-            }
+            //if (animator)
+            //{
+            //    animator.SetFloat("Speed", Mathf.Abs(this.rigidbody2D.velocity.x) + Mathf.Abs(this.rigidbody2D.velocity.y));
+            //}
 
             bool foundTarget = false;
             foreach(PlayerController player in players)
@@ -63,7 +66,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
 
                 // Sight Cone
-                if (distanceToPlayer < range && distanceToPlayer < distanceToTarget &&
+                if (player.Alive && distanceToPlayer < range && distanceToPlayer < distanceToTarget &&
                     Vector3.Angle(vectorToPlayer, this.transform.right) < viewAngle &&
                     hit && hit.collider.CompareTag("Player"))
                 {
@@ -94,9 +97,17 @@ public class EnemyController : MonoBehaviour, IDamageable
                 {
                     // Attack Range
                     RaycastHit2D hit = Physics2D.Raycast(this.transform.position, vectorToPlayer, AttackRange);
-                    if (hit && hit.collider.CompareTag("Player"))
+                    if (hit && hit.collider.CompareTag("Player") && hit.collider.gameObject == target.gameObject)
                     {
-                        //weapon.Attack(); *************************
+                        // ANIMATE ATTACK HERE
+                        IDamageable damageComponent = target.GetComponent<IDamageable>();
+                        stun += 0.3f;
+
+                        // The colliding object will begin falling if the point on the bottom of the object's collider is contained inside of the collider on this pit
+                        if (damageComponent != null)
+                        {
+                            damageComponent.Damage(attackDamage, attackStun, (vectorToPlayer.normalized * knockbackMultiplier));
+                        }
                         rigidbody2D.velocity = Vector2.zero;
                     }
 
