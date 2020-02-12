@@ -6,8 +6,8 @@ public class EnemyController : MonoBehaviour, IDamageable
 {
     [Header("Components")]
     new Rigidbody2D rigidbody2D;
-    new Collider2D collider2D;
     List<PlayerController> players;
+    Animator animator = null;
 
     [Header("Attributes")]
     [SerializeField] float range = 10f;
@@ -16,25 +16,28 @@ public class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] float health = 100f;
     float stun = 0;
 
-    Animator animator = null;
-
     [Header("AITweaks")]
     [SerializeField] float AttackRange = 0.5f;
     [SerializeField] float movementChance = .5f;
     [SerializeField] float movementTime = 10;
     [SerializeField] float idleTime = 1.5f;
     [SerializeField] float blockedReverseAngle = 90;
+    
     float timeLeft;
     bool acting = false;
     bool followingPlayer = false;
     bool touchingPlayer = false;
+    PlayerController target = null;
+    float distanceToTarget = float.PositiveInfinity;
+
+
 
     void Awake()
     {
         rigidbody2D = this.GetComponent<Rigidbody2D>();
-        collider2D = this.GetComponent<Collider2D>();
         animator = this.GetComponent<Animator>();
         players = new List<PlayerController>(FindObjectsOfType<PlayerController>());
+
         foreach (PlayerController player in players)
         {
             Debug.Log(player.gameObject);
@@ -51,83 +54,98 @@ public class EnemyController : MonoBehaviour, IDamageable
                 animator.SetFloat("Speed", Mathf.Abs(this.rigidbody2D.velocity.x) + Mathf.Abs(this.rigidbody2D.velocity.y));
             }
 
-            foreach (PlayerController player in players)
+            bool foundTarget = false;
+            foreach(PlayerController player in players)
             {
                 Vector2 vectorToPlayer = player.transform.position - transform.position;
+                float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, vectorToPlayer);
 
 
                 // Sight Cone
-                if (Vector3.Distance(player.transform.position, transform.position) < range &&
+                if (distanceToPlayer < range && distanceToPlayer < distanceToTarget &&
                     Vector3.Angle(vectorToPlayer, this.transform.right) < viewAngle &&
                     hit && hit.collider.CompareTag("Player"))
                 {
-                    acting = false;
-                    followingPlayer = true;
-                    this.transform.right = (Vector2)(vectorToPlayer);
+                    foundTarget = true;
+                    target = player;
+                    distanceToTarget = distanceToPlayer;
+                }
+            }
+            if (!foundTarget)
+            {
+                target = null;
+                distanceToTarget = float.PositiveInfinity;
+            }
 
-                    if (stun > 0)
-                    {
-                        stun -= Time.deltaTime;
-                    }
-                    else
-                    {
-                        // Attack Range
-                        hit = Physics2D.Raycast(this.transform.position, vectorToPlayer, AttackRange);
-                        if (hit && hit.collider.CompareTag("Player"))
-                        {
-                            //weapon.Attack(); *************************
-                            rigidbody2D.velocity = Vector2.zero;
-                        }
+            if (target)
+            {
+                acting = false;
+                followingPlayer = true;
 
-                        if (!touchingPlayer && Vector3.Distance(player.transform.position, transform.position) > AttackRange)
-                        {
-                            rigidbody2D.velocity = this.transform.right.normalized * speed;
-                            this.transform.right = rigidbody2D.velocity;
-                        }
-                    }
+                Vector2 vectorToPlayer = target.transform.position - transform.position;
+                this.transform.right = (Vector2)(vectorToPlayer);
+
+                if (stun > 0)
+                {
+                    stun -= Time.deltaTime;
                 }
                 else
                 {
-                    if (stun > 0)
+                    // Attack Range
+                    RaycastHit2D hit = Physics2D.Raycast(this.transform.position, vectorToPlayer, AttackRange);
+                    if (hit && hit.collider.CompareTag("Player"))
                     {
-                        stun -= Time.deltaTime;
-                    }
-                    else if (followingPlayer)
-                    {
-                        acting = true;
-                        followingPlayer = false;
-                        timeLeft = idleTime;
+                        //weapon.Attack(); *************************
                         rigidbody2D.velocity = Vector2.zero;
                     }
-                    else if (!acting)
+
+                    if (!touchingPlayer && Vector3.Distance(target.transform.position, transform.position) > AttackRange)
                     {
-                        float action = Random.value;
-                        acting = true;
-                        if (action < movementChance)
-                        {
-                            timeLeft = movementTime;
-                            this.transform.right = Random.insideUnitCircle;
-                            rigidbody2D.velocity = this.transform.right.normalized * speed;
-                        }
-                        else
-                        {
-                            timeLeft = idleTime;
-                            rigidbody2D.velocity = Vector2.zero;
-                        }
+                        rigidbody2D.velocity = this.transform.right.normalized * speed;
+                        this.transform.right = rigidbody2D.velocity;
                     }
-                    else if (timeLeft > 0)
+                }
+                
+            }
+            else
+            {
+                if (stun > 0)
+                {
+                    stun -= Time.deltaTime;
+                }
+                else if (followingPlayer)
+                {
+                    acting = true;
+                    followingPlayer = false;
+                    timeLeft = idleTime;
+                    rigidbody2D.velocity = Vector2.zero;
+                }
+                else if (!acting)
+                {
+                    float action = Random.value;
+                    acting = true;
+                    if (action < movementChance)
                     {
-                        timeLeft -= Time.deltaTime;
+                        timeLeft = movementTime;
+                        this.transform.right = Random.insideUnitCircle;
+                        rigidbody2D.velocity = this.transform.right.normalized * speed;
                     }
                     else
                     {
-                        acting = false;
+                        timeLeft = idleTime;
+                        rigidbody2D.velocity = Vector2.zero;
                     }
                 }
+                else if (timeLeft > 0)
+                {
+                    timeLeft -= Time.deltaTime;
+                }
+                else
+                {
+                    acting = false;
+                }
             }
-
-            
         }
     }
 
