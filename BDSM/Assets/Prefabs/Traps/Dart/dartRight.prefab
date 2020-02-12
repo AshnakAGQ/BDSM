@@ -149,4 +149,5 @@ MonoBehaviour:
   timer: 0
   opponent: Player
   stun: 0
-  knockback: 5
+  knockback: 10
+  direction: 2

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 {
@@ -19,6 +20,10 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
+
+    private int numPlayersDead;
+    UnityEvent playerDies = new UnityEvent();
+    UnityEvent playerRevives = new UnityEvent();
 
     [Header("Sound")]
     [SerializeField] public AudioContainer footStepClip;
@@ -51,11 +56,21 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         audioPlayer = this.GetComponent<AudioPlayer>();
         interactables = new List<InteractableObject>();
     }
+
+    private void Start()
+    {
+        playerDies.AddListener(AddNumDeadPlayers);
+        playerRevives.AddListener(SubtractNumDeadPlayers);
+    }
    
 
     private void Update()
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        if(numPlayersDead >= 2)
+        {
+            gameOverMenu.SetActive(true);
+        }
 
         if (Time.timeScale == 1 && Alive)
         {
@@ -196,6 +211,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             Alive = false;
             rigidbody2D.bodyType = RigidbodyType2D.Static;
             transform.right = -transform.up;
+            playerDies.Invoke();
         }
     }
 
@@ -209,6 +225,16 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         //SetHealthUI();
 
         //m_audioPlayer.playSFX(healFileName, healVolume, healPitchMin, healPitchMax);
+    }
+
+    private void AddNumDeadPlayers()
+    {
+        numPlayersDead += 1;
+    }
+
+    private void SubtractNumDeadPlayers()
+    {
+        numPlayersDead -= 1;
     }
 
     public void Fall(float fallingRate)

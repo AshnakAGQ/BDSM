@@ -13,9 +13,10 @@ public class dartScript : MonoBehaviour
     //this is a timer so in case the bullet somehow goes out of bounds
     //it will despawn itself. 
     public float timer;
-    [SerializeField] private string opponent = null;
     [SerializeField] float stun = 0f;
     [SerializeField] int knockback = 10;
+    enum directions { down, left, right };
+    [SerializeField] directions direction;
 
 
     List<IDamageable> damaged;
@@ -24,17 +25,31 @@ public class dartScript : MonoBehaviour
     private void Awake()
     {
         damaged = new List<IDamageable>();
- 
+        rigid = GetComponent<Rigidbody2D>();
     }
 
-   
+    private void Start()
+    {
+        switch (direction)
+        {
+            case directions.down:
+                rigid.velocity = -transform.up * speed;
+                break;
+            case directions.left:
+                rigid.velocity = -transform.right * speed;
+                break;
+            case directions.right:
+                rigid.velocity = transform.right * speed;
+                break;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         //up because that's my default position.
         //firepoint will tell the bullet where to go.
         
-        rigid.velocity = transform.right * speed;
 
         //In case the bullet somehow ends up outside I am destroying it.
         timer += 0.5F * Time.deltaTime;
