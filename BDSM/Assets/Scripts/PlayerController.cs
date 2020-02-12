@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 {
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     Vector2 direction;
     public Vector2 lookDirection;
+
+    public GameObject pauseMenu;
 
     [Header("Sound")]
     [SerializeField] public AudioContainer footStepClip;
@@ -122,7 +125,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     void OnPause(InputValue value)
     {
-        Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+        Pause_menu.instance.Pause(Time.timeScale == 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
