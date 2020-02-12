@@ -24,7 +24,7 @@ public class MageController : MonoBehaviour
 
     void OnPrimaryAction(InputValue value)
     {
-        if (fireball != null && primaryTimer <= 0)
+        if (Time.timeScale == 1 && fireball != null && primaryTimer <= 0)
         {
             Fireball ball = Instantiate(fireball, transform.position + aimingCircle.right, aimingCircle.rotation).GetComponent<Fireball>();
             ball.Target = targetingReticle.position;
@@ -44,14 +44,17 @@ public class MageController : MonoBehaviour
 
     private void Update()
     {
-        Vector2 target = playerController.lookDirection * (playerInput.currentControlScheme == "Gamepad" ? range : 1);
+        if (Time.timeScale == 1)
+        {
+            Vector2 target = playerController.lookDirection * (playerInput.currentControlScheme == "Gamepad" ? range : 1);
 
-        if (target.magnitude < 1)
-            targetingReticle.localPosition = aimingCircle.right * 1000;
-        else
-            targetingReticle.localPosition = target;
+            if (target.magnitude < 1)
+                targetingReticle.localPosition = aimingCircle.right * 1000;
+            else
+                targetingReticle.localPosition = target;
 
-        if (primaryTimer > 0)
-            primaryTimer -= Time.deltaTime;
+            if (primaryTimer > 0)
+                primaryTimer -= Time.deltaTime;
+        }
     }
 }
