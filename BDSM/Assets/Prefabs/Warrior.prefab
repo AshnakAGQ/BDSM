@@ -67,7 +67,7 @@ MonoBehaviour:
   aimingCircle: {fileID: 5569942882035411332}
   lookDirection: {x: 0, y: 0}
   footStepClip: {fileID: 11400000, guid: 32081bd53d92c884ca75fdd264b7c8bc, type: 2}
-  speed: 5
+  speed: 3
   maxHealth: 200
   health: 200
 --- !u!114 &5569942881905994732
@@ -125,7 +125,7 @@ MonoBehaviour:
     m_ActionId: 3b2b174b-72bc-4e59-aab0-37884900afba
     m_ActionName: Player/Interact[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard and Mouse
+  m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -227,7 +227,7 @@ Animator:
   m_GameObject: {fileID: 5569942881905994722}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c068e61312727874fb2517ceca23bc1f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b9bddfaadcdf5c4f905937b858726ca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -316,7 +316,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 547137113
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d463de298f4d2b64b9ef29ebc00d7800, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
