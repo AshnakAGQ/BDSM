@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     private AudioPlayer audioPlayer;
     [SerializeField] Transform aimingCircle = null;
 
-    Vector2 direction;
+    public Vector2 direction;
     public Vector2 lookDirection;
 
     public GameObject pauseMenu;
@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     List<InteractableObject> interactables;
 
     public static GameObjectUnityEvent PitEvent = new GameObjectUnityEvent();
+
+    public float Speed { get => speed; set => speed = value; }
+    public float Stun { get => stun; }
 
     private void Awake()
     {
@@ -142,12 +145,16 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     void OnPause(InputValue value)
     {
-        Pause_menu.instance.Pause(Time.timeScale == 1);
+        if (Pause_menu.instance != null)
+        {
+            Pause_menu.instance.Pause(Time.timeScale == 1);
+        }
+
     }
 
     void OnContinue(InputValue value)
     {
-        if(gameOverMenu.activeSelf)
+        if(gameOverMenu != null && gameOverMenu.activeSelf)
         {
            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

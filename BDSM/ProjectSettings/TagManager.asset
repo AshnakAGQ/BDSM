@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - Enemy
   - Interactable
+  - Shield
   layers:
   - Default
   - TransparentFX
