@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     [Header("Sound")]
     [SerializeField] public AudioContainer footStepClip;
 
+
     [Header("Stats")]
     [SerializeField] float speed = 5f;
     float stun = 0;
