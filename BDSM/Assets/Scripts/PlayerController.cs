@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     public float Speed { get => speed; set => speed = value; }
     public float Stun { get => stun; }
+    public bool Alive { get => alive; set => alive = value; }
 
     private void Awake()
     {
@@ -56,7 +57,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
 
-        if (Time.timeScale == 1 && alive)
+        if (Time.timeScale == 1 && Alive)
         {
             if (stun > 0) stun -= Time.deltaTime;
             else if (!falling)
@@ -121,7 +122,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     void OnInteract(InputValue value)
     {
-        if (Time.timeScale == 1 && alive && stun <= 0)
+        if (Time.timeScale == 1 && Alive && stun <= 0)
         {
             foreach (InteractableObject obj in interactables)
                 obj.Interact();
@@ -189,10 +190,10 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             health -= damage;
             this.stun = stun;
         }
-        if (alive && health <= 0)
+        if (Alive && health <= 0)
         {
             health = 0;
-            alive = false;
+            Alive = false;
             rigidbody2D.bodyType = RigidbodyType2D.Static;
             transform.right = -transform.up;
         }
