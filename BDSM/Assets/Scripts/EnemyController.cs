@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] float health = 100f;
     float stun = 0;
 
-    [SerializeField] Animator animator = null;
+    Animator animator = null;
 
     [Header("AITweaks")]
     [SerializeField] float AttackRange = 0.5f;
@@ -33,6 +33,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         rigidbody2D = this.GetComponent<Rigidbody2D>();
         collider2D = this.GetComponent<Collider2D>();
+        animator = this.GetComponent<Animator>();
         players = new List<PlayerController>(FindObjectsOfType<PlayerController>());
         foreach (PlayerController player in players)
         {
@@ -45,10 +46,10 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (Time.timeScale == 1)
         {
-            //if (animator)
-            //{
-            //    animator.SetFloat("Speed", Mathf.Abs(this.rigidbody2D.velocity.x) + Mathf.Abs(this.rigidbody2D.velocity.y));
-            //}
+            if (animator)
+            {
+                animator.SetFloat("Speed", Mathf.Abs(this.rigidbody2D.velocity.x) + Mathf.Abs(this.rigidbody2D.velocity.y));
+            }
 
             foreach (PlayerController player in players)
             {
