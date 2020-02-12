@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     [Header("Sound")]
     [SerializeField] public AudioContainer footStepClip;
 
+
     [Header("Stats")]
     [SerializeField] float speed = 5f;
     float stun = 0;
@@ -125,6 +126,15 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     void OnPause(InputValue value)
     {
         Pause_menu.instance.Pause(Time.timeScale == 1);
+    }
+
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        IPickupable itemComponent = collider.GetComponent<IPickupable>();
+        if (itemComponent != null)
+        {
+            itemComponent.pickUp();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

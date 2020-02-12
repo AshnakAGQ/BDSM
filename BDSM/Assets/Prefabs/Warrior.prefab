@@ -133,6 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimingCircle: {fileID: 5569942882035411332}
+  SwordHit:
+  - {fileID: 11400000, guid: 34b4295fc61b0df4c8794ed8b361f8ef, type: 2}
+  - {fileID: 11400000, guid: a60e561aad3080248a50392f3546c93a, type: 2}
+  - {fileID: 11400000, guid: 93a02dce378b4714491061cd96af1137, type: 2}
+  - {fileID: 11400000, guid: cf9c54bad7fc783478074b8f4543a126, type: 2}
 --- !u!114 &5740874676475642017
 MonoBehaviour:
   m_ObjectHideFlags: 0
