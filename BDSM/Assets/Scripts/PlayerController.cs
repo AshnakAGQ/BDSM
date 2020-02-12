@@ -21,8 +21,9 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
+    public GameObject healthBar;
 
-    private int numPlayersDead;
+    static private int numPlayersDead;
     UnityEvent playerDies = new UnityEvent();
     UnityEvent playerRevives = new UnityEvent();
 
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     [SerializeField] public AudioContainer footStepClip;
 
 
+    
     [Header("Stats")]
     [SerializeField] float speed = 5f;
     float stun = 0;
@@ -68,16 +70,14 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     {
         playerDies.AddListener(AddNumDeadPlayers);
         playerRevives.AddListener(SubtractNumDeadPlayers);
+        numPlayersDead = 0;
     }
    
 
     private void Update()
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
-        if(numPlayersDead >= 2)
-        {
-            gameOverMenu.SetActive(true);
-        }
+        
 
         if (Time.timeScale == 1)
         { 
@@ -270,6 +270,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             rigidbody2D.AddForce(knockback);
             health -= damage;
             this.stun = stun;
+            float healthPercent = health / maxHealth;
+            healthBar.GetComponent<Image>().fillAmount = healthPercent;
         }
         if (Alive && health <= 0)
         {
@@ -296,6 +298,12 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     private void AddNumDeadPlayers()
     {
         numPlayersDead += 1;
+        Debug.Log(numPlayersDead);
+        if (numPlayersDead >= 2)
+        {
+            Debug.Log("Game Over");
+            gameOverMenu.SetActive(true);
+        }
     }
 
     private void SubtractNumDeadPlayers()
