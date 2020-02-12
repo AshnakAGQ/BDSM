@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
+    public GameObject healthBar;
 
     static private int numPlayersDead;
     UnityEvent playerDies = new UnityEvent();
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     [SerializeField] public AudioContainer footStepClip;
 
 
+    
     [Header("Stats")]
     [SerializeField] float speed = 5f;
     float stun = 0;
@@ -202,6 +204,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             rigidbody2D.AddForce(knockback);
             health -= damage;
             this.stun = stun;
+            float healthPercent = health / maxHealth;
+            healthBar.GetComponent<Image>().fillAmount = healthPercent;
         }
         if (Alive && health <= 0)
         {
