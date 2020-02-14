@@ -16,6 +16,12 @@ public class WarriorController : MonoBehaviour
     bool blocking;
     bool unblock = false;
 
+    [Header("Sound")]
+    [SerializeField] public List<AudioContainer> SwordHit;
+
+    AudioPlayer m_AudioPlayer;
+
+
 
     private void Awake()
     {
@@ -23,6 +29,7 @@ public class WarriorController : MonoBehaviour
         player = GetComponent<PlayerController>();
         sword = GetComponentInChildren<Sword>();
         shield = GetComponentInChildren<Shield>().gameObject;
+        m_AudioPlayer = this.GetComponent<AudioPlayer>();
     }
 
     private void Start()
@@ -46,13 +53,13 @@ public class WarriorController : MonoBehaviour
 
     void OnPrimaryAction(InputValue value)
     {
-        if (!blocking && Time.timeScale == 1 && player.Stun <= 0)
+        if (player.Alive && !blocking && Time.timeScale == 1 && player.Stun <= 0)
             sword.Swing();
     }
 
     void OnSecondaryAction(InputValue value)
     {
-        if (value.isPressed && Time.timeScale == 1 && player.Stun <= 0)
+        if (player.Alive && value.isPressed && Time.timeScale == 1 && player.Stun <= 0)
         {
             blocking = true;
             animator.SetBool("blocking", true);

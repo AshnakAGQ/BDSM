@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using System;
 
 public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 {
@@ -15,9 +19,19 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     public Vector2 direction;
     public Vector2 lookDirection;
 
+    public GameObject pauseMenu;
+    public GameObject gameOverMenu;
+    public GameObject healthBar;
+
+    static private int numPlayersDead;
+    UnityEvent playerDies = new UnityEvent();
+    UnityEvent playerRevives = new UnityEvent();
+
     [Header("Sound")]
     [SerializeField] public AudioContainer footStepClip;
 
+
+    
     [Header("Stats")]
     [SerializeField] float speed = 5f;
     float stun = 0;
@@ -28,12 +42,18 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     enum Directions { Up, Right, Down, Left }
     
-    List<InteractableObject> interactables;
+    List<IInteractable> interactables;
+    List<PlayerController> playersTouching;
 
     public static GameObjectUnityEvent PitEvent = new GameObjectUnityEvent();
 
     public float Speed { get => speed; set => speed = value; }
     public float Stun { get => stun; }
+    public bool Alive { get => alive; set => alive = value; }
+
+    bool reviving = false;
+    float progress = 0;
+    float goal = 2;
 
     private void Awake()
     {
@@ -42,57 +62,79 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         animator = this.GetComponent<Animator>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         audioPlayer = this.GetComponent<AudioPlayer>();
-        interactables = new List<InteractableObject>();
+        interactables = new List<IInteractable>();
+        playersTouching = new List<PlayerController>();
+    }
+
+    private void Start()
+    {
+        playerDies.AddListener(AddNumDeadPlayers);
+        playerRevives.AddListener(SubtractNumDeadPlayers);
+        numPlayersDead = 0;
     }
    
 
     private void Update()
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        
 
-        if (Time.timeScale == 1 && alive)
-        {
-            if (stun > 0) stun -= Time.deltaTime;
-            else if (!falling)
+        if (Time.timeScale == 1)
+        { 
+            if (Alive)
             {
-                // Movement
-                rigidbody2D.velocity = direction * speed;
-
-                if (direction != Vector2.zero)
+                if (stun > 0) stun -= Time.deltaTime;
+                else if (!falling)
                 {
-                    animator.SetBool("moving", true);
+                    // Movement
+                    rigidbody2D.velocity = direction * speed;
 
-                    if (!audioPlayer.ActiveSounds.ContainsKey(footStepClip))
+                    if (direction != Vector2.zero)
                     {
-                        audioPlayer.PlaySFX(footStepClip);
-                    }
-                }
-                else
-                    animator.SetBool("moving", false);
+                        animator.SetBool("moving", true);
 
-                
-            }
-            if (!(stun > 0))
-            {
-                // Aiming
-                if (lookDirection != Vector2.zero)
-                {
-                    aimingCircle.right = lookDirection;
-
-                    if (System.Math.Abs(lookDirection.y) > System.Math.Abs(lookDirection.x))
-                    {
-                        if (lookDirection.y > 0)
-                            animator.SetInteger("direction", (int)Directions.Up);
-                        else
-                            animator.SetInteger("direction", (int)Directions.Down);
+                        if (!audioPlayer.ActiveSounds.ContainsKey(footStepClip))
+                        {
+                            audioPlayer.PlaySFX(footStepClip);
+                        }
                     }
                     else
+                        animator.SetBool("moving", false);
+
+
+                }
+                if (!(stun > 0))
+                {
+                    // Aiming
+                    if (lookDirection != Vector2.zero)
                     {
-                        if (lookDirection.x > 0)
-                            animator.SetInteger("direction", (int)Directions.Right);
+                        aimingCircle.right = lookDirection;
+
+                        if (System.Math.Abs(lookDirection.y) > System.Math.Abs(lookDirection.x))
+                        {
+                            if (lookDirection.y > 0)
+                                animator.SetInteger("direction", (int)Directions.Up);
+                            else
+                                animator.SetInteger("direction", (int)Directions.Down);
+                        }
                         else
-                            animator.SetInteger("direction", (int)Directions.Left);
+                        {
+                            if (lookDirection.x > 0)
+                                animator.SetInteger("direction", (int)Directions.Right);
+                            else
+                                animator.SetInteger("direction", (int)Directions.Left);
+                        }
                     }
+                }
+            }
+            else if (reviving)
+            {
+                progress += Time.deltaTime;
+                GetComponent<SpriteRenderer>().color = Color.Lerp(Color.yellow, Color.green, progress / goal);
+                if (progress >= goal)
+                {
+                    RevivePlayer();
+                    StopRevive();
                 }
             }
         }
@@ -113,44 +155,111 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         lookDirection = (Vector2)(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
     }
 
+    public void RevivePlayer()
+    {
+        health = maxHealth / 2;
+        alive = true;
+        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        transform.right = transform.up;
+        playerRevives.Invoke();
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
     void OnInteract(InputValue value)
     {
-        if (Time.timeScale == 1 && alive && stun <= 0)
+        if (Time.timeScale == 1 && Alive && stun <= 0 && value.isPressed)
         {
-            foreach (InteractableObject obj in interactables)
+            foreach (IInteractable obj in interactables)
                 obj.Interact();
+            foreach (PlayerController obj in playersTouching)
+                obj.StartRevive();
+        }
+        else
+        {
+            foreach (PlayerController obj in playersTouching)
+                obj.StopRevive();
+        }
+    }
+
+    private void StopRevive()
+    {
+        reviving = false;
+        progress = 0;
+    }
+
+    private void StartRevive()
+    {
+        if (!alive)
+        {
+            reviving = true;
+            progress = 0;
         }
     }
 
     void OnPause(InputValue value)
     {
-        Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+        if (Pause_menu.instance != null)
+        {
+            Pause_menu.instance.Pause(Time.timeScale == 1);
+        }
+
+    }
+
+    void OnContinue(InputValue value)
+    {
+        if(gameOverMenu != null && gameOverMenu.activeSelf)
+        {
+           SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        IPickupable itemComponent = collider.GetComponent<IPickupable>();
+        if (itemComponent != null)
+        {
+            itemComponent.pickUp();
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            if (!collision.collider.GetComponent<PlayerController>().Alive) collision.collider.GetComponent<SpriteRenderer>().color = Color.yellow;
+            playersTouching.Add(collision.collider.GetComponent<PlayerController>());
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            collision.collider.GetComponent<SpriteRenderer>().color = Color.white;
+            playersTouching.Remove(collision.collider.GetComponent<PlayerController>());
+            collision.collider.GetComponent<PlayerController>().StopRevive();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Interactable"))
+        IInteractable obj = collision.GetComponent<IInteractable>();
+        if (obj != null)
         {
-            InteractableObject obj = collision.GetComponent<InteractableObject>();
-            if (obj != null)
-            {
-                obj.GetComponent<SpriteRenderer>().color = Color.yellow;
-                interactables.Add(obj);
-            }
+            collision.GetComponent<SpriteRenderer>().color = Color.yellow;
+            interactables.Add(obj);
         }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Interactable"))
+        IInteractable obj = collision.GetComponent<IInteractable>();
+        if (obj != null)
         {
-            InteractableObject obj = collision.GetComponent<InteractableObject>();
-            if (obj != null)
-            {
-                obj.GetComponent<SpriteRenderer>().color = Color.white;
-                interactables.Remove(obj);
-            }
+            collision.GetComponent<SpriteRenderer>().color = Color.white;
+            interactables.Remove(obj);
         }
+        
     }
 
     public void Damage(float damage, float stun, Vector2 knockback)
@@ -161,13 +270,16 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             rigidbody2D.AddForce(knockback);
             health -= damage;
             this.stun = stun;
+            float healthPercent = health / maxHealth;
+            healthBar.GetComponent<Image>().fillAmount = healthPercent;
         }
-        if (alive && health <= 0)
+        if (Alive && health <= 0)
         {
             health = 0;
-            alive = false;
+            Alive = false;
             rigidbody2D.bodyType = RigidbodyType2D.Static;
             transform.right = -transform.up;
+            playerDies.Invoke();
         }
     }
 
@@ -181,6 +293,22 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         //SetHealthUI();
 
         //m_audioPlayer.playSFX(healFileName, healVolume, healPitchMin, healPitchMax);
+    }
+
+    private void AddNumDeadPlayers()
+    {
+        numPlayersDead += 1;
+        Debug.Log(numPlayersDead);
+        if (numPlayersDead >= 2)
+        {
+            Debug.Log("Game Over");
+            gameOverMenu.SetActive(true);
+        }
+    }
+
+    private void SubtractNumDeadPlayers()
+    {
+        numPlayersDead -= 1;
     }
 
     public void Fall(float fallingRate)
@@ -203,5 +331,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             yield return null;
         }
         spriteRenderer.enabled = false;
+        alive = false;
+        playerDies.Invoke();
     }
 }

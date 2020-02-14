@@ -1290,56 +1290,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4638712747406367037, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4638712747406367037, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4638712747406367037, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4638712747406367037, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4638712747406367037, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.81915206
-      objectReference: {fileID: 0}
-    - target: {fileID: 4638712747406367037, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.57357645
-      objectReference: {fileID: 0}
-    - target: {fileID: 4638712747406367037, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 110
-      objectReference: {fileID: 0}
-    - target: {fileID: 4733835377253225492, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4934851585978634280, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4934851585978634280, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5569942881905994720, guid: 40addd9316c0e7a4c867bb764b14a8d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1402,73 +1352,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40addd9316c0e7a4c867bb764b14a8d9, type: 3}
---- !u!1 &405097050 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2098014696702274379, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-    type: 3}
-  m_PrefabInstance: {fileID: 405097049}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &405097051
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405097050}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b1570716fd9d60745aa052095ab64fae, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &405097052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405097050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33208f51da5692c47b975da8591e157c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 30
-  stun: 0.5
-  knockback: 100
-  lunge: 100
---- !u!61 &405097053
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405097050}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.5, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 1, y: 0.5}
-    oldSize: {x: 1, y: 0.390625}
-    newSize: {x: 0.32, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.390625}
-  m_EdgeRadius: 0
 --- !u!1 &418595035
 GameObject:
   m_ObjectHideFlags: 0
@@ -21349,11 +21232,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6711885800270649704, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
-        type: 3}
-      propertyPath: m_UIInputModule
-      value: 
-      objectReference: {fileID: 1850793245}
     - target: {fileID: 6711885800270649706, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
         type: 3}
       propertyPath: m_Name

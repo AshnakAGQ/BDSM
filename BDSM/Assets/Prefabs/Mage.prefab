@@ -137,9 +137,12 @@ MonoBehaviour:
   targetingReticle: {fileID: 5577646312365641431}
   fireball: {fileID: 2638678283289825603, guid: 26c958b607298dc4bb9ede8e6194efd9,
     type: 3}
+  wind: {fileID: 2638678283289825603, guid: 784ad2455fd58cc439d2e0dff4023609, type: 3}
   range: 6
   primaryCooldown: 1
   primaryTimer: 0
+  secondaryCooldown: 3
+  secondaryTimer: 0
 --- !u!114 &7589310516770514662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +156,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimingCircle: {fileID: 6711885800294019530}
+  direction: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}
+  pauseMenu: {fileID: 0}
+  gameOverMenu: {fileID: 0}
   footStepClip: {fileID: 11400000, guid: 32081bd53d92c884ca75fdd264b7c8bc, type: 2}
   speed: 3
   maxHealth: 200

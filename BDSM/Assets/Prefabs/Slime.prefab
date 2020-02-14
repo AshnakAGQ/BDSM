@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4902045898475320358}
   - component: {fileID: 2076512073188973171}
   - component: {fileID: 8521992237858410787}
+  - component: {fileID: 3297718730239399350}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Enemy
@@ -154,3 +155,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d4bd1bb71e73f47a3bb1b4c56589b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3297718730239399350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7166239239742448777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24530a0663134cd4a84577d8039dd87a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 10
+  viewAngle: 45
+  speed: 2
+  health: 50
+  attackDamage: 15
+  attackStun: 0.3
+  knockbackMultiplier: 100
+  AttackRange: 0.5
+  movementChance: 0.7
+  movementTime: 10
+  idleTime: 1.5
+  blockedReverseAngle: 90
+  direction: {x: 0, y: 0}
+  lookDirection: {x: 0, y: 0}

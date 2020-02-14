@@ -5,11 +5,20 @@ using UnityEngine;
 public class Loot : MonoBehaviour, IPickupable
 {
     [SerializeField] int m_score = 0;
+
+    
+
     //[SerializeField] float animSpeed = 2;
     //[SerializeField] float animRange = .125f;
 
     //Vector3 startPosition;
     //Vector3 offset;
+
+    private void Awake()
+    {
+ 
+
+    }
 
     private void Update()
     {

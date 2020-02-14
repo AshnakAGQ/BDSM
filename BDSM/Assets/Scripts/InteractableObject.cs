@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InteractableObject : MonoBehaviour
+public interface IInteractable
 {
-    public abstract void Interact();
+    void Interact();
 }
