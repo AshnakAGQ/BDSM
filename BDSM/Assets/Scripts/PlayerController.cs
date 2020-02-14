@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     [Header("Sound")]
     [SerializeField] public AudioContainer footStepClip;
-
-
     
     [Header("Stats")]
     [SerializeField] float speed = 5f;
@@ -263,6 +261,9 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     public void Damage(float damage, float stun, Vector2 knockback)
     {
+        WarriorController warriorCheck = GetComponent<WarriorController>();
+        if (warriorCheck && warriorCheck.Blocking && Vector2.Angle(lookDirection, -knockback) < warriorCheck.BlockAngle / 2)
+            return;
         if (health > 0)
         {
             rigidbody2D.velocity = Vector2.zero;

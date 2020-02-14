@@ -14,6 +14,7 @@ public class WarriorController : MonoBehaviour
     PlayerController player;
     float maxSpeed;
     bool blocking;
+    float blockAngle = 45f;
     bool unblock = false;
 
     [Header("Sound")]
@@ -21,7 +22,9 @@ public class WarriorController : MonoBehaviour
 
     AudioPlayer m_AudioPlayer;
 
-
+    public GameObject Shield { get => shield; set => shield = value; }
+    public bool Blocking { get => blocking; set => blocking = value; }
+    public float BlockAngle { get => blockAngle; set => blockAngle = value; }
 
     private void Awake()
     {
