@@ -22275,11 +22275,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Warrior
       objectReference: {fileID: 0}
-    - target: {fileID: 5569942881905994732, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_DefaultControlScheme
-      value: Keyboard and Mouse
-      objectReference: {fileID: 0}
     - target: {fileID: 5740874676475642017, guid: 40addd9316c0e7a4c867bb764b14a8d9,
         type: 3}
       propertyPath: pauseMenu
