@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,13 +30,13 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
     float timeLeft;
     bool acting = false;
     bool followingPlayer = false;
-    bool touchingPlayer = false;
+    int touchingPlayer = 0;
     PlayerController target = null;
     float distanceToTarget = float.PositiveInfinity;
+    [System.NonSerialized] public bool falling = false;
 
     //Animation Variables
     enum Directions { Up, Right, Down, Left }
-    public Vector2 direction;
     public Vector2 lookDirection;
 
     void Awake()
@@ -53,16 +54,14 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Time.timeScale == 1)
+        if (stun > 0) stun -= Time.deltaTime;
+        else if (Time.timeScale == 1 && !falling)
         {
-            if (animator)
-            {
-                direction = rigidbody2D.velocity;
-                if(rigidbody2D.velocity != Vector2.zero) lookDirection = rigidbody2D.velocity;
-            }
+            target = null;
+            distanceToTarget = float.PositiveInfinity;
 
-            bool foundTarget = false;
-            foreach(PlayerController player in players)
+            // Find closest player
+            foreach (PlayerController player in players)
             {
                 Vector2 vectorToPlayer = player.transform.position - transform.position;
                 float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
@@ -74,15 +73,10 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                     Vector3.Angle(vectorToPlayer, lookDirection) < viewAngle &&
                     hit && hit.collider.CompareTag("Player"))
                 {
-                    foundTarget = true;
                     target = player;
                     distanceToTarget = distanceToPlayer;
+                    lookDirection = vectorToPlayer.normalized;
                 }
-            }
-            if (!foundTarget)
-            {
-                target = null;
-                distanceToTarget = float.PositiveInfinity;
             }
 
             if (target)
@@ -90,63 +84,16 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                 acting = false;
                 followingPlayer = true;
 
-                Vector2 vectorToPlayer = target.transform.position - transform.position;
-
-                if (stun > 0)
-                {
-                    stun -= Time.deltaTime;
-                }
+                // Attack Range
+                RaycastHit2D hit = Physics2D.Raycast(this.transform.position, lookDirection, AttackRange);
+                if (hit && hit.collider.CompareTag("Player") && hit.collider.gameObject == target.gameObject)
+                    Attack(target);
                 else
-                {
-                    //animation
-                    if (animator)
-                    {
-                        if (System.Math.Abs(lookDirection.y) > System.Math.Abs(lookDirection.x))
-                        {
-                            if (lookDirection.y > 0)
-                                animator.SetInteger("direction", (int)Directions.Up);
-                            else
-                                animator.SetInteger("direction", (int)Directions.Down);
-                        }
-                        else
-                        {
-                            if (lookDirection.x > 0)
-                                animator.SetInteger("direction", (int)Directions.Right);
-                            else
-                                animator.SetInteger("direction", (int)Directions.Left);
-                        }
-                    }
-                    
-                    // Attack Range
-                    RaycastHit2D hit = Physics2D.Raycast(this.transform.position, vectorToPlayer, AttackRange);
-                    if (hit && hit.collider.CompareTag("Player") && hit.collider.gameObject == target.gameObject)
-                    {
-                        // ANIMATE ATTACK HERE
-                        IDamageable damageComponent = target.GetComponent<IDamageable>();
-                        stun += 0.3f;
-
-                        // The colliding object will begin falling if the point on the bottom of the object's collider is contained inside of the collider on this pit
-                        if (damageComponent != null)
-                        {
-                            damageComponent.Damage(attackDamage, attackStun, (vectorToPlayer.normalized * knockbackMultiplier));
-                        }
-                        rigidbody2D.velocity = Vector2.zero;
-                    }
-
-                    if (!touchingPlayer && Vector3.Distance(target.transform.position, transform.position) > AttackRange)
-                    {
-                        rigidbody2D.velocity = vectorToPlayer.normalized * speed;
-                    }
-                }
-                
+                    rigidbody2D.velocity = lookDirection * speed;
             }
             else
             {
-                if (stun > 0)
-                {
-                    stun -= Time.deltaTime;
-                }
-                else if (followingPlayer)
+                if (followingPlayer)
                 {
                     acting = true;
                     followingPlayer = false;
@@ -155,17 +102,20 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                 }
                 else if (!acting)
                 {
-                    float action = Random.value;
+                    float action = UnityEngine.Random.value;
+                    
                     acting = true;
                     if (action < movementChance)
                     {
                         timeLeft = movementTime;
-                        rigidbody2D.velocity = Random.insideUnitCircle * speed;
+                        lookDirection = UnityEngine.Random.insideUnitCircle;
+                        rigidbody2D.velocity = lookDirection * speed;
                     }
                     else
                     {
                         timeLeft = idleTime;
                         rigidbody2D.velocity = Vector2.zero;
+                        lookDirection = UnityEngine.Random.insideUnitCircle;
                     }
                 }
                 else if (timeLeft > 0)
@@ -178,6 +128,57 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                 }
             }
         }
+    }
+
+    private void Update()
+    {
+        if (stun <= 0 && Time.timeScale == 1 && !falling )
+        {
+            if (rigidbody2D.velocity != Vector2.zero)
+            {
+                animator.SetBool("moving", true);
+
+                //if (!audioPlayer.ActiveSounds.ContainsKey(footStepClip))
+                //{
+                //    audioPlayer.PlaySFX(footStepClip);
+                //}
+            }
+            else
+                animator.SetBool("moving", false);
+
+            // Aiming
+            if (lookDirection != Vector2.zero)
+            {
+                if (System.Math.Abs(lookDirection.y) > System.Math.Abs(lookDirection.x))
+                {
+                    if (lookDirection.y > 0)
+                        animator.SetInteger("direction", (int)Directions.Up);
+                    else
+                        animator.SetInteger("direction", (int)Directions.Down);
+                }
+                else
+                {
+                    if (lookDirection.x > 0)
+                        animator.SetInteger("direction", (int)Directions.Right);
+                    else
+                        animator.SetInteger("direction", (int)Directions.Left);
+                }
+            }
+        }
+    }
+
+    private void Attack(PlayerController target)
+    {
+        // ANIMATE ATTACK HERE
+        IDamageable damageComponent = target.GetComponent<IDamageable>();
+        stun += 0.3f;
+
+        // The colliding object will begin falling if the point on the bottom of the object's collider is contained inside of the collider on this pit
+        if (damageComponent != null)
+        {
+            damageComponent.Damage(attackDamage, attackStun, (lookDirection * knockbackMultiplier));
+        }
+        rigidbody2D.velocity = Vector2.zero;
     }
 
     public void Damage(float damage, float stun, Vector2 knockback)
@@ -204,7 +205,8 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
         if (acting && !followingPlayer && rigidbody2D.velocity != Vector2.zero)
         {
-            rigidbody2D.velocity = lookDirection.normalized * speed;
+            lookDirection = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-blockedReverseAngle, blockedReverseAngle) / 2) * -lookDirection;
+            rigidbody2D.velocity = lookDirection * speed;
         }
 
         if (collision.collider.CompareTag("Player"))
@@ -213,7 +215,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
             rigidbody2D.velocity = Vector2.zero;
 
-            touchingPlayer = true;
+            touchingPlayer++;
         }
     }
 
@@ -221,10 +223,9 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
     {
         if (collision.collider.CompareTag("Player"))
         {
-            touchingPlayer = false;
+            touchingPlayer--;
         }
     }
-
 
     public void Fall(float fallingRate)
     {
