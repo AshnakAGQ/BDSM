@@ -178,5 +178,4 @@ MonoBehaviour:
   movementTime: 10
   idleTime: 1.5
   blockedReverseAngle: 90
-  direction: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}

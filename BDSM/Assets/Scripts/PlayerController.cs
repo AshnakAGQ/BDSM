@@ -84,27 +84,26 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             if (Alive)
             {
                 if (stun > 0) stun -= Time.deltaTime;
-                else if (!falling)
+                else 
                 {
-                    // Movement
-                    rigidbody2D.velocity = direction * speed;
-
-                    if (direction != Vector2.zero)
+                    if (!falling)
                     {
-                        animator.SetBool("moving", true);
+                        // Movement
+                        rigidbody2D.velocity = direction * speed;
 
-                        if (!audioPlayer.ActiveSounds.ContainsKey(footStepClip))
+                        if (direction != Vector2.zero)
                         {
-                            audioPlayer.PlaySFX(footStepClip);
+                            animator.SetBool("moving", true);
+
+                            if (!audioPlayer.ActiveSounds.ContainsKey(footStepClip))
+                            {
+                                audioPlayer.PlaySFX(footStepClip);
+                            }
                         }
+                        else
+                            animator.SetBool("moving", false);
                     }
-                    else
-                        animator.SetBool("moving", false);
-
-
-                }
-                if (!(stun > 0))
-                {
+                       
                     // Aiming
                     if (lookDirection != Vector2.zero)
                     {
