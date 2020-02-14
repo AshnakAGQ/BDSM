@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - Interactable
   - Shield
+  - Fireball
   layers:
   - Default
   - TransparentFX
