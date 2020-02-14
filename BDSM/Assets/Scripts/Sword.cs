@@ -17,6 +17,8 @@ public class Sword : MonoBehaviour
     [SerializeField] float stun = .5f;
     [SerializeField] int knockback = 100;
     [SerializeField] int lunge = 100;
+    [SerializeField] float cooldown = 0.5f;
+    float timer = 0;
 
 
     private void Awake()
@@ -30,6 +32,11 @@ public class Sword : MonoBehaviour
     private void Update()
     {
         if (spriteRenderer.enabled) spriteRenderer.sortingOrder = Mathf.RoundToInt((transform.position.y + 0.15f) * 100f) * -1;
+
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
     }
 
     public void CanCombo()
@@ -43,6 +50,7 @@ public class Sword : MonoBehaviour
         canCombo = false;
         animator.ResetTrigger("Swing");
         animator.ResetTrigger("Swing2");
+        timer = cooldown;
     }
 
     public void Swing()
@@ -54,7 +62,7 @@ public class Sword : MonoBehaviour
             animator.SetTrigger("Swing2");
             player.Damage(0, .25f, transform.parent.transform.right * lunge);
         }
-        else if (!swinging)
+        else if (!swinging && timer <= 0)
         {
             damaged = new List<IDamageable>();
             swinging = true;
