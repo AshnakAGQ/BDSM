@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     public float Speed { get => speed; set => speed = value; }
     public float Stun { get => stun; }
     public bool Alive { get => alive; set => alive = value; }
+    public Vector3 LastPosition { get => lastPosition; set => lastPosition = value; }
+    public bool CanLook { get => canLook; set => canLook = value; }
 
     bool reviving = false;
     float progress = 0;
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     float bleedTimer = 0;
     bool bleed = false;
     Vector3 lastPosition;
+    bool canLook = true;
 
     private void Awake()
     {
@@ -167,12 +170,12 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     void OnLook(InputValue value)
     {
-        lookDirection = value.Get<Vector2>();
+        if (canLook) lookDirection = value.Get<Vector2>();
     }
 
     void OnLookMouse(InputValue value)
     {
-        lookDirection = (Vector2)(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
+        if (canLook) lookDirection = (Vector2)(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
     }
 
     public void RevivePlayer()

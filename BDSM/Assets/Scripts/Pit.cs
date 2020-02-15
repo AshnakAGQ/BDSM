@@ -23,9 +23,16 @@ public class Pit : MonoBehaviour
         IMassive massComponent = collision.GetComponent<IMassive>();
 
         // The colliding object will begin falling if the point on the bottom of the object's collider is contained inside of the collider on this pit
-        if (massComponent != null && m_Collider2D.bounds.Contains(collision.bounds.center - new Vector3(0, collision.bounds.size.y/2, 0)))
+        if (massComponent != null && m_Collider2D.bounds.Contains(collision.bounds.center - new Vector3(0, collision.bounds.size.y/2, collision.bounds.center.z)))
         {
-            massComponent.Fall(fallingRate);
+            if (collision.CompareTag("Block"))
+            {
+                massComponent.Fall(fallingRate);
+                Destroy(gameObject);
+            }
+            else
+                massComponent.Fall(fallingRate);
+
         }
     }
 }

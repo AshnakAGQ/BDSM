@@ -24869,11 +24869,6 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1447534098}
-    - target: {fileID: 8068273351270388976, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40addd9316c0e7a4c867bb764b14a8d9, type: 3}
 --- !u!1001 &1805028355
