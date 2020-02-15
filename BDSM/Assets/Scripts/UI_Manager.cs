@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
-public class Pause_menu : MonoBehaviour
+public class UI_Manager : MonoBehaviour
 {
-    public static Pause_menu instance = null;
-    public GameObject pause_menu;
+    public static UI_Manager instance = null;
+    public GameObject pauseMenu = null;
+    public GameObject gameOverMenu = null;
+    public GameObject warriorHP = null;
+    public GameObject mageHP = null;
+    public bool gameWon = false;
+
     private bool paused = false;
 
     void Awake()
@@ -18,15 +24,16 @@ public class Pause_menu : MonoBehaviour
             Destroy(this);
     }
 
-
-    void Start()
+    public static void GameOver()
     {
-
+        instance.gameOverMenu.SetActive(true);
     }
 
-    void Update()
-    { 
-        
+    public static void WinGame()
+    {
+        instance.gameOverMenu.GetComponent<TextMeshProUGUI>().text = "YOU WIN\n<size=20> Left Click or Press \"Options\"\nTo Restart";
+        instance.gameOverMenu.SetActive(true);
+        instance.gameWon = true;
     }
 
     public void Pause(bool enable)
@@ -39,7 +46,7 @@ public class Pause_menu : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-        pause_menu.SetActive(enable);
+        pauseMenu.SetActive(enable);
         paused = enable;
     }
 
@@ -53,7 +60,7 @@ public class Pause_menu : MonoBehaviour
         if(paused)
         {
             Time.timeScale = 1;
-            pause_menu.SetActive(false);
+            pauseMenu.SetActive(false);
             paused = false;
         }
     }

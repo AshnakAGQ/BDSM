@@ -16,7 +16,7 @@ public class dartScript : MonoBehaviour
     [SerializeField] float stun = 0f;
     [SerializeField] int knockback = 10;
     enum directions { down, left, right };
-    [SerializeField] directions direction;
+    [SerializeField] directions direction = directions.down;
 
 
     List<IDamageable> damaged;

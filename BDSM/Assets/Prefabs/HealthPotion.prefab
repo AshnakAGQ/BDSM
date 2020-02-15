@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1416178878429682346}
   - component: {fileID: 1369863430481496220}
   - component: {fileID: 1518397075556435226}
+  - component: {fileID: 562486380}
   m_Layer: 0
   m_Name: HealthPotion
   m_TagString: Untagged
@@ -68,8 +69,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1691509509
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: -3157503908703246339, guid: 4561ad5bd2ff2c540b768b778a8314f0,
     type: 3}
@@ -96,3 +97,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthRestore: 100
+--- !u!70 &562486380
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192652257355403661}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.34375, y: 0.5}
+  m_Direction: 0

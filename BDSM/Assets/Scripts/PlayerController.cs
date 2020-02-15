@@ -19,8 +19,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     public Vector2 direction;
     public Vector2 lookDirection;
 
-    public GameObject pauseMenu;
-    public GameObject gameOverMenu;
     public GameObject healthBar;
 
     static private int numPlayersDead;
@@ -160,6 +158,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         transform.right = transform.up;
         playerRevives.Invoke();
         GetComponent<SpriteRenderer>().color = Color.white;
+        healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
     }
 
     void OnInteract(InputValue value)
@@ -195,16 +194,16 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     void OnPause(InputValue value)
     {
-        if (Pause_menu.instance != null)
+        if (UI_Manager.instance != null)
         {
-            Pause_menu.instance.Pause(Time.timeScale == 1);
+            UI_Manager.instance.Pause(Time.timeScale == 1);
         }
 
     }
 
     void OnContinue(InputValue value)
     {
-        if(gameOverMenu != null && gameOverMenu.activeSelf)
+        if(UI_Manager.instance.gameOverMenu != null && UI_Manager.instance.gameOverMenu.activeSelf)
         {
            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -270,12 +269,12 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             rigidbody2D.AddForce(knockback);
             health -= damage;
             this.stun = stun;
-            float healthPercent = health / maxHealth;
-            healthBar.GetComponent<Image>().fillAmount = healthPercent;
+            healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
         }
         if (Alive && health <= 0)
         {
             health = 0;
+            healthBar.GetComponent<Image>().fillAmount = 0;
             Alive = false;
             rigidbody2D.bodyType = RigidbodyType2D.Static;
             transform.right = -transform.up;
@@ -290,6 +289,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             health = maxHealth;
         else
             health = newHealthValue;
+        
+        healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
         //SetHealthUI();
 
         //m_audioPlayer.playSFX(healFileName, healVolume, healPitchMin, healPitchMax);
@@ -302,7 +303,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         if (numPlayersDead >= 2)
         {
             Debug.Log("Game Over");
-            gameOverMenu.SetActive(true);
+            UI_Manager.GameOver();
         }
     }
 

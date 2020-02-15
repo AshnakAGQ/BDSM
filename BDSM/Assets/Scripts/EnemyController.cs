@@ -64,13 +64,13 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
             foreach (PlayerController player in players)
             {
                 Vector2 vectorToPlayer = player.transform.position - transform.position;
-                float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+                float distanceToPlayer = Vector2.Distance(player.transform.position, transform.position);
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, vectorToPlayer);
 
 
                 // Sight Cone
                 if (player.Alive && distanceToPlayer < range && distanceToPlayer < distanceToTarget &&
-                    Vector3.Angle(vectorToPlayer, lookDirection) < viewAngle &&
+                    Vector2.Angle(vectorToPlayer, lookDirection) < viewAngle &&
                     hit && hit.collider.CompareTag("Player"))
                 {
                     target = player;

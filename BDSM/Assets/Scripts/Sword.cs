@@ -17,7 +17,7 @@ public class Sword : MonoBehaviour
     [SerializeField] float stun = .5f;
     [SerializeField] int knockback = 100;
     [SerializeField] int lunge = 100;
-    [SerializeField] float cooldown = 0.5f;
+    [SerializeField] float cooldown = 0.25f;
     float timer = 0;
 
 

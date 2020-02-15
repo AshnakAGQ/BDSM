@@ -53,6 +53,9 @@ TagManager:
   - name: OnGround
     uniqueID: 2603457787
     locked: 0
+  - name: Rope
+    uniqueID: 2523782049
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
