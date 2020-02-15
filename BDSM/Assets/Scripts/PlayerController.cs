@@ -50,6 +50,12 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     bool reviving = false;
     float progress = 0;
     float goal = 2;
+    
+    ParticleSystem BloodParticles = null;
+    float bleedCooldown = 0.3f;
+    float bleedTimer = 0;
+    bool bleed = false;
+    Vector3 lastPosition;
 
     private void Awake()
     {
@@ -60,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         audioPlayer = this.GetComponent<AudioPlayer>();
         interactables = new List<IInteractable>();
         playersTouching = new List<PlayerController>();
+        BloodParticles = GetComponentInChildren<ParticleSystem>();
     }
 
     private void Start()
@@ -67,18 +74,25 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         playerDies.AddListener(AddNumDeadPlayers);
         playerRevives.AddListener(SubtractNumDeadPlayers);
         numPlayersDead = 0;
+        bleedCooldown = BloodParticles.main.duration;
     }
    
 
     private void Update()
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
-        
 
         if (Time.timeScale == 1)
-        { 
+        {
             if (Alive)
             {
+                if (bleedTimer > 0) bleedTimer -= Time.deltaTime;
+                else if (bleed)
+                {
+                    bleed = false;
+                    BloodParticles.Play();
+                    bleedTimer = bleedCooldown;
+                }
                 if (stun > 0) stun -= Time.deltaTime;
                 else 
                 {
@@ -132,6 +146,17 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
                     StopRevive();
                 }
             }
+            else
+            {
+                if (bleedTimer > 0) bleedTimer -= Time.deltaTime;
+                else if (lastPosition != transform.position)
+                {
+                    bleed = false;
+                    BloodParticles.Play();
+                    bleedTimer = bleedCooldown;
+                }
+            }
+            lastPosition = transform.position;
         }
     }
 
@@ -268,6 +293,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             rigidbody2D.velocity = Vector2.zero;
             rigidbody2D.AddForce(knockback);
             health -= damage;
+            if (damage > 0) bleed = true;
             this.stun = stun;
             healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
         }
@@ -299,10 +325,8 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     private void AddNumDeadPlayers()
     {
         numPlayersDead += 1;
-        Debug.Log(numPlayersDead);
         if (numPlayersDead >= 2)
         {
-            Debug.Log("Game Over");
             UI_Manager.GameOver();
         }
     }

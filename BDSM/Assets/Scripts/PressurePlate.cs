@@ -17,7 +17,6 @@ public class PressurePlate : MonoBehaviour
     {
         if (triggerCount == 0)
         {
-            Debug.Log(name + " triggered");
 
             if (target != null) target.Activate();
 
@@ -31,7 +30,6 @@ public class PressurePlate : MonoBehaviour
     {
         if (triggerCount == 1)
         {
-            Debug.Log(name + " untriggered");
 
             if (target != null) target.Deactivate();
 

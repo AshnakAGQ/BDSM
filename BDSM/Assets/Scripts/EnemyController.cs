@@ -44,11 +44,6 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
         rigidbody2D = this.GetComponent<Rigidbody2D>();
         animator = this.GetComponent<Animator>();
         players = new List<PlayerController>(FindObjectsOfType<PlayerController>());
-
-        foreach (PlayerController player in players)
-        {
-            Debug.Log(player.gameObject);
-        }
     }
 
     // Update is called once per frame

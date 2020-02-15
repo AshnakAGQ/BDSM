@@ -86,7 +86,6 @@ public class Sword : MonoBehaviour
 
         if (damageableComponent != null && !damaged.Contains(damageableComponent))
         {
-            print("knockback: " + knockback * (Vector2)(collision.transform.position - transform.position));
             damageableComponent.Damage(damage, stun, knockback * (Vector2)(collision.transform.position - transform.position));
             damaged.Add(damageableComponent);
         }
