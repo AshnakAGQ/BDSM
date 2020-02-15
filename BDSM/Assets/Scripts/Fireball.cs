@@ -79,7 +79,7 @@ public class Fireball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print(collision.collider.name);
+        //print(Vector2.Angle((target - (Vector2)transform.position).normalized, -collision.GetContact(0).normal));
         activated = true;
         rigidbody2D.bodyType = RigidbodyType2D.Static;
         collider2D.isTrigger = true;

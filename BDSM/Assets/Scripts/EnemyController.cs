@@ -28,9 +28,12 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
     [SerializeField] float blockedReverseAngle = 90;
     
     float timeLeft;
-    bool acting = false;
+    bool moving;
+    bool canBounce = false;
     bool followingPlayer = false;
+    Vector2 lastPosition;
     int touchingPlayer = 0;
+    Vector2 previousDirection;
     PlayerController target = null;
     float distanceToTarget = float.PositiveInfinity;
     [System.NonSerialized] public bool falling = false;
@@ -76,7 +79,6 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
             if (target)
             {
-                acting = false;
                 followingPlayer = true;
 
                 // Attack Range
@@ -84,42 +86,39 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                 if (hit && hit.collider.CompareTag("Player") && hit.collider.gameObject == target.gameObject)
                     Attack(target);
                 else
-                    rigidbody2D.velocity = lookDirection * speed;
+                    rigidbody2D.velocity = lookDirection.normalized * speed;
             }
             else
             {
                 if (followingPlayer)
                 {
-                    acting = true;
                     followingPlayer = false;
                     timeLeft = idleTime;
                     rigidbody2D.velocity = Vector2.zero;
                 }
-                else if (!acting)
+                else if (timeLeft > 0)
                 {
+                    timeLeft -= Time.deltaTime;
+                    if (moving) rigidbody2D.velocity = lookDirection.normalized * speed;
+                }
+                else
+                { 
                     float action = UnityEngine.Random.value;
-                    
-                    acting = true;
+
+                    lookDirection = UnityEngine.Random.insideUnitCircle;
+                    previousDirection = lookDirection;
                     if (action < movementChance)
                     {
                         timeLeft = movementTime;
-                        lookDirection = UnityEngine.Random.insideUnitCircle;
-                        rigidbody2D.velocity = lookDirection * speed;
+                        moving = true;
+                        canBounce = true;
                     }
                     else
                     {
                         timeLeft = idleTime;
                         rigidbody2D.velocity = Vector2.zero;
-                        lookDirection = UnityEngine.Random.insideUnitCircle;
+                        moving = false;
                     }
-                }
-                else if (timeLeft > 0)
-                {
-                    timeLeft -= Time.deltaTime;
-                }
-                else
-                {
-                    acting = false;
                 }
             }
         }
@@ -186,7 +185,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
         health -= damage;
         this.stun = stun;
-        acting = false;
+        timeLeft = 0;
         followingPlayer = true;
 
         if (health <= 0)
@@ -197,13 +196,6 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (acting && !followingPlayer && rigidbody2D.velocity != Vector2.zero)
-        {
-            lookDirection = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-blockedReverseAngle, blockedReverseAngle) / 2) * -lookDirection;
-            rigidbody2D.velocity = lookDirection * speed;
-        }
-
         if (collision.collider.CompareTag("Player"))
         {
             Vector2 vectorToPlayer = collision.gameObject.transform.position - this.transform.position;
@@ -212,14 +204,80 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
             touchingPlayer++;
         }
+
+        else if (collision.collider.CompareTag("Enemy"))
+        {
+            Vector2 normal = collision.GetContact(0).normal;
+            lookDirection = Vector2.Reflect(lookDirection, normal);
+            previousDirection = -previousDirection;
+        }
+
+        else if (!followingPlayer && moving)
+        {
+            Vector2 normal = collision.GetContact(0).normal;
+
+            float angle = Vector2.SignedAngle(lookDirection, -normal);
+
+            if (Math.Abs(angle) < 25f)
+            {
+                lookDirection = Vector2.Reflect(lookDirection, normal);
+                previousDirection = -previousDirection;
+                if (canBounce) canBounce = false;
+                else timeLeft = 0;
+            }
+            else
+            {
+                if (angle < 0) // Transform right
+                    lookDirection = -Vector2.Perpendicular(normal);
+                else           // Transform left
+                    lookDirection = Vector2.Perpendicular(normal);
+            }
+        }
+
+        lastPosition = transform.position;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!followingPlayer && moving && !collision.collider.CompareTag("Player") && !collision.collider.CompareTag("Enemy"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, lookDirection, .75f);
+            if (hit.collider != null)
+            {
+                //print(this.name + " blocked by " + hit.collider.name);
+                List<ContactPoint2D> contacts = new List<ContactPoint2D>();
+                collision.GetContacts(contacts);
+                foreach (ContactPoint2D contact in contacts)
+                {
+                    Vector2 normal = contact.normal;
+
+                    float angle = Vector2.SignedAngle(lookDirection, -normal);
+
+                    if (Math.Abs(angle) < 25f)
+                    {
+                        lookDirection = Vector2.Reflect(lookDirection, normal);
+                        previousDirection = -previousDirection;
+                        if (canBounce) canBounce = false;
+                        else timeLeft = 0;
+                    }
+                    else
+                    {
+                        if (angle < 0) // Transform right
+                            lookDirection = -Vector2.Perpendicular(normal);
+                        else           // Transform left
+                            lookDirection = Vector2.Perpendicular(normal);
+                    }
+                    hit = Physics2D.Raycast(transform.position, lookDirection, 0.1f);
+                    if (hit.collider != null) break;
+                }
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
-        {
-            touchingPlayer--;
-        }
+        if (collision.collider.CompareTag("Player")) touchingPlayer--;
+        lookDirection = previousDirection;
     }
 
     public void Fall(float fallingRate)

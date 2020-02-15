@@ -182,11 +182,11 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     {
         health = maxHealth / 2;
         alive = true;
-        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
         transform.right = transform.up;
         playerRevives.Invoke();
         GetComponent<SpriteRenderer>().color = Color.white;
         healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
+        rigidbody2D.drag = 0;
     }
 
     void OnInteract(InputValue value)
@@ -294,20 +294,20 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         if (health > 0)
         {
             rigidbody2D.velocity = Vector2.zero;
-            rigidbody2D.AddForce(knockback);
-            health -= damage;
             if (damage > 0) bleed = true;
-            this.stun = stun;
+            health -= damage;
             healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
+            rigidbody2D.AddForce(knockback);
+            this.stun = stun;
         }
         if (Alive && health <= 0)
         {
             health = 0;
             healthBar.GetComponent<Image>().fillAmount = 0;
             Alive = false;
-            rigidbody2D.bodyType = RigidbodyType2D.Static;
             transform.right = -transform.up;
             playerDies.Invoke();
+            rigidbody2D.drag = 10f;
         }
     }
 
