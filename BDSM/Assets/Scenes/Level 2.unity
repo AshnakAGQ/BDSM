@@ -7610,21 +7610,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Warrior
       objectReference: {fileID: 0}
-    - target: {fileID: 5569942881905994723, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5569942881905994732, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_UIInputModule
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5569942881905994732, guid: 40addd9316c0e7a4c867bb764b14a8d9,
-        type: 3}
-      propertyPath: m_DefaultControlScheme
-      value: Gamepad
-      objectReference: {fileID: 0}
     - target: {fileID: 5740874676475642017, guid: 40addd9316c0e7a4c867bb764b14a8d9,
         type: 3}
       propertyPath: healthBar
@@ -7754,16 +7739,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6711885800270649704, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
-        type: 3}
-      propertyPath: m_UIInputModule
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6711885800270649704, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
-        type: 3}
-      propertyPath: m_DefaultControlScheme
-      value: Keyboard and Mouse
-      objectReference: {fileID: 0}
     - target: {fileID: 6711885800270649706, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
         type: 3}
       propertyPath: m_Name
@@ -7823,11 +7798,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7589310516770514662, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
-        type: 3}
-      propertyPath: speed
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7589310516770514662, guid: fdce5e21864bd3b40b4ba3cd0f5cbd7f,
         type: 3}
