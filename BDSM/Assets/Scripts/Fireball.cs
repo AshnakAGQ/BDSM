@@ -74,6 +74,10 @@ public class Fireball : MonoBehaviour
         if (!activated && Vector2.Distance(transform.position, Target) <= 0.1f)
         {
             activated = true;
+            if (GameManager.instance)
+            {
+                GameManager.instance.GetComponent<AudioPlayer>().PlaySFX(fireBlastSound);
+            }
             rigidbody2D.bodyType = RigidbodyType2D.Static;
             collider2D.isTrigger = true;
         }

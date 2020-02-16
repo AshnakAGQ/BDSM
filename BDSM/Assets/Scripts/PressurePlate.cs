@@ -13,29 +13,35 @@ public class PressurePlate : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void OnTriggerEnter2D()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (triggerCount == 0)
+        if(!collision.CompareTag("Projectile"))
         {
+            if (triggerCount == 0)
+            {
 
-            if (target != null) target.Activate();
+                if (target != null) target.Activate();
 
-            if (spriteRenderer != null) spriteRenderer.color = Color.gray;
+                if (spriteRenderer != null) spriteRenderer.color = Color.gray;
+            }
+
+            ++triggerCount;
         }
-
-        ++triggerCount;
     }
 
-    public void OnTriggerExit2D()
+    public void OnTriggerExit2D(Collider2D collision)
     {
-        if (triggerCount == 1)
+        if (!collision.CompareTag("Projectile"))
         {
+            if (triggerCount == 1)
+            {
 
-            if (target != null) target.Deactivate();
+                if (target != null) target.Deactivate();
 
-            if (spriteRenderer != null) spriteRenderer.color = Color.white;
+                if (spriteRenderer != null) spriteRenderer.color = Color.white;
+            }
+
+            --triggerCount;
         }
-
-        --triggerCount;
     }
 }

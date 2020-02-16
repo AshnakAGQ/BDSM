@@ -25,7 +25,7 @@ public class MagicSwitch : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Fireball"))
+        if (collision.collider.CompareTag("Projectile"))
         {
             activated = true;
             bool activate = true;
