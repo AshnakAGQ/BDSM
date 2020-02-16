@@ -31,7 +31,7 @@ public class UI_Manager : MonoBehaviour
 
     public static void WinGame()
     {
-        instance.gameOverMenu.GetComponent<TextMeshProUGUI>().text = "YOU WIN\n<size=20> Left Click or Press \"Options\"\nTo Restart";
+        instance.gameOverMenu.GetComponent<TextMeshProUGUI>().text = "YOU WIN\n<size=20> Left Click or Press \"Options\"\nTo Continue";
         instance.gameOverMenu.SetActive(true);
         instance.gameWon = true;
     }

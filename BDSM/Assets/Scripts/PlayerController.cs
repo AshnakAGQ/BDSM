@@ -233,7 +233,10 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     {
         if(UI_Manager.instance.gameOverMenu != null && UI_Manager.instance.gameOverMenu.activeSelf)
         {
-           SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if (UI_Manager.instance.gameWon)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            else
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

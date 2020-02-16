@@ -354,7 +354,7 @@ MonoBehaviour:
   lookDirection: {x: 0, y: 0}
   healthBar: {fileID: 0}
   footStepClip: {fileID: 11400000, guid: 32081bd53d92c884ca75fdd264b7c8bc, type: 2}
-  speed: 3
+  speed: 4
   maxHealth: 200
   health: 200
 --- !u!114 &5569942881905994732

@@ -5,8 +5,12 @@ using UnityEngine;
 public class MagicSwitch : MonoBehaviour
 {
     [SerializeField] ActivatableObject target = null;
+    [SerializeField] List<MagicSwitch> coop = null;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    bool activated = false;
+
+    public bool Activated { get => activated; }
 
     private void Awake()
     {
@@ -23,8 +27,17 @@ public class MagicSwitch : MonoBehaviour
     {
         if (collision.collider.CompareTag("Fireball"))
         {
+            activated = true;
+            bool activate = true;
+            if (coop != null)
+            {
+                foreach(MagicSwitch ms in coop)
+                {
+                    if (!ms.Activated) activate = false;
+                }
+            }
             if (animator != null) animator.SetTrigger("activated");
-            if (target != null) target.Activate();
+            if (target != null && activate) target.Activate();
         }
     }
 }
