@@ -9,7 +9,7 @@ public class Fireball : MonoBehaviour
     [SerializeField] int animTime = 30;
 
     [Header("Stats")]
-    [SerializeField] int speed = 5;
+    [SerializeField] int speed = 10;
     [SerializeField] int damage = 30;
     [SerializeField] float stun = .5f;
     [SerializeField] int knockback = 100;
@@ -26,7 +26,9 @@ public class Fireball : MonoBehaviour
 
     public Vector2 Target { get => target; set => target = value; }
 
+    [Header("Audio")]
     [SerializeField] public AudioContainer fireballSound;
+    [SerializeField] public AudioContainer fireBlastSound;
     AudioPlayer m_AudioPlayer;
 
     private void Awake()
@@ -81,6 +83,10 @@ public class Fireball : MonoBehaviour
     {
         //print(Vector2.Angle((target - (Vector2)transform.position).normalized, -collision.GetContact(0).normal));
         activated = true;
+        if (GameManager.instance)
+        {
+            GameManager.instance.GetComponent<AudioPlayer>().PlaySFX(fireBlastSound);
+        }
         rigidbody2D.bodyType = RigidbodyType2D.Static;
         collider2D.isTrigger = true;
         if (collision.collider.CompareTag("Wall"))

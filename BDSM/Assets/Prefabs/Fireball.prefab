@@ -119,12 +119,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0}
   animTime: 30
-  speed: 5
+  speed: 10
   damage: 30
   stun: 0.5
   knockback: 25
   areaOfEffect: 3
   fireballSound: {fileID: 11400000, guid: d23f83a3911f1274ba4236a9209b2763, type: 2}
+  fireBlastSound: {fileID: 11400000, guid: cc77035e92690b543a83922d4003c4b9, type: 2}
 --- !u!50 &2638678283289825592
 Rigidbody2D:
   serializedVersion: 4
