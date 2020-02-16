@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 405097053}
   - component: {fileID: 405097051}
   - component: {fileID: 405097052}
+  - component: {fileID: 2050184487464572469}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -146,6 +147,26 @@ MonoBehaviour:
   knockback: 100
   lunge: 100
   cooldown: 0.25
+  swordHitSounds:
+  - {fileID: 11400000, guid: 4be13ec718c1e574a8bf1f205fa1bba6, type: 2}
+  - {fileID: 11400000, guid: a60e561aad3080248a50392f3546c93a, type: 2}
+  - {fileID: 11400000, guid: 93a02dce378b4714491061cd96af1137, type: 2}
+  - {fileID: 11400000, guid: cf9c54bad7fc783478074b8f4543a126, type: 2}
+  swordSwingSounds:
+  - {fileID: 11400000, guid: 34b4295fc61b0df4c8794ed8b361f8ef, type: 2}
+  - {fileID: 11400000, guid: 1db2716410c1dec429880c4ac9cd528b, type: 2}
+--- !u!114 &2050184487464572469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098014696702274379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d4bd1bb71e73f47a3bb1b4c56589b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4733835377253225492
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e52be596bbdc8f42b0520296b3f3ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BloodParticles: {fileID: 8068273351270388976}
   aimingCircle: {fileID: 5569942882035411332}
   direction: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}
@@ -671,12 +691,6 @@ PrefabInstance:
 --- !u!4 &4872885708919107874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6114543689224167815, guid: 3f34d41fa88577346a86384592f310fa,
-    type: 3}
-  m_PrefabInstance: {fileID: 1676692194064552101}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &8068273351270388976 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8699984123719812181, guid: 3f34d41fa88577346a86384592f310fa,
     type: 3}
   m_PrefabInstance: {fileID: 1676692194064552101}
   m_PrefabAsset: {fileID: 0}
