@@ -10,6 +10,7 @@ public class Sword : MonoBehaviour
     PlayerController player;
     SpriteRenderer spriteRenderer;
     List<IDamageable> damaged;
+    AudioPlayer m_AudioPlayer;
 
 
     [Header("Stats")]
@@ -20,9 +21,13 @@ public class Sword : MonoBehaviour
     [SerializeField] float cooldown = 0.25f;
     float timer = 0;
 
+    [Header("Sounds")]
+    [SerializeField] List<AudioContainer> swordHitSounds;
+    [SerializeField] List<AudioContainer> swordSwingSounds;
 
     private void Awake()
     {
+        m_AudioPlayer = GetComponent<AudioPlayer>();
         animator = GetComponent<Animator>();
         player = GetComponentInParent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -55,8 +60,12 @@ public class Sword : MonoBehaviour
 
     public void Swing()
     {
-        if(canCombo)
+        
+
+        if (canCombo)
         {
+            int index = Random.Range(0, swordSwingSounds.Count);
+            m_AudioPlayer.PlaySFX(swordSwingSounds[index]);
             damaged = new List<IDamageable>();
             canCombo = false;
             animator.SetTrigger("Swing2");
@@ -64,6 +73,8 @@ public class Sword : MonoBehaviour
         }
         else if (!swinging && timer <= 0)
         {
+            int index = Random.Range(0, swordSwingSounds.Count);
+            m_AudioPlayer.PlaySFX(swordSwingSounds[index]);
             damaged = new List<IDamageable>();
             swinging = true;
             animator.SetTrigger("Swing");
@@ -88,6 +99,8 @@ public class Sword : MonoBehaviour
         {
             damageableComponent.Damage(damage, stun, knockback * (Vector2)(collision.transform.position - transform.position));
             damaged.Add(damageableComponent);
+            int index = Random.Range(0, swordHitSounds.Count);
+            m_AudioPlayer.PlaySFX(swordHitSounds[index]);
         }
     }
 }
