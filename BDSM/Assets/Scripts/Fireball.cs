@@ -71,7 +71,7 @@ public class Fireball : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!activated && Vector2.Distance(transform.position, Target) <= 0.05f)
+        if (!activated && Vector2.Distance(transform.position, Target) <= 0.1f)
         {
             activated = true;
             rigidbody2D.bodyType = RigidbodyType2D.Static;
