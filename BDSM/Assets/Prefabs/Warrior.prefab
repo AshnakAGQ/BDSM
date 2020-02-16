@@ -154,7 +154,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf9c54bad7fc783478074b8f4543a126, type: 2}
   swordSwingSounds:
   - {fileID: 11400000, guid: 34b4295fc61b0df4c8794ed8b361f8ef, type: 2}
-  - {fileID: 11400000, guid: 1db2716410c1dec429880c4ac9cd528b, type: 2}
 --- !u!114 &2050184487464572469
 MonoBehaviour:
   m_ObjectHideFlags: 0

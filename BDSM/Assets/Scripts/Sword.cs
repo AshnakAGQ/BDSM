@@ -60,11 +60,12 @@ public class Sword : MonoBehaviour
 
     public void Swing()
     {
-        int index = Random.Range(0, swordSwingSounds.Count);
-        m_AudioPlayer.PlaySFX(swordHitSounds[index]);
+        
 
         if (canCombo)
         {
+            int index = Random.Range(0, swordSwingSounds.Count);
+            m_AudioPlayer.PlaySFX(swordSwingSounds[index]);
             damaged = new List<IDamageable>();
             canCombo = false;
             animator.SetTrigger("Swing2");
@@ -72,6 +73,8 @@ public class Sword : MonoBehaviour
         }
         else if (!swinging && timer <= 0)
         {
+            int index = Random.Range(0, swordSwingSounds.Count);
+            m_AudioPlayer.PlaySFX(swordSwingSounds[index]);
             damaged = new List<IDamageable>();
             swinging = true;
             animator.SetTrigger("Swing");
@@ -96,11 +99,8 @@ public class Sword : MonoBehaviour
         {
             damageableComponent.Damage(damage, stun, knockback * (Vector2)(collision.transform.position - transform.position));
             damaged.Add(damageableComponent);
-        }
-        if (damaged.Count > 0)
-        {
             int index = Random.Range(0, swordHitSounds.Count);
-            //m_AudioPlayer.PlaySFX(swordHitSounds[index]);
+            m_AudioPlayer.PlaySFX(swordHitSounds[index]);
         }
     }
 }
