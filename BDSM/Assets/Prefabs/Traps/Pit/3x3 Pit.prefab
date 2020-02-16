@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5773626709266955002}
   m_Layer: 0
-  m_Name: Pit 1 1
+  m_Name: 3x3 Pit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
