@@ -70,8 +70,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         interactables = new List<IInteractable>();
         playersTouching = new List<PlayerController>();
         BloodParticles = GetComponentInChildren<ParticleSystem>();
-        if (GetComponent<WarriorController>()) healthBar = UI_Manager.instance.warriorHP;
-        else healthBar = UI_Manager.instance.mageHP;
     }
 
     private void Start()
