@@ -64,7 +64,7 @@ public class dartScript : MonoBehaviour
     {
         IDamageable damageableComponent = collision.gameObject.GetComponent<IDamageable>();
 
-        if (damageableComponent != null && !damaged.Contains(damageableComponent))
+        if (damageableComponent != null && !damaged.Contains(damageableComponent) && !collision.collider.CompareTag("Enemy"))
         {
             damageableComponent.Damage(dartDamage, stun, knockback * (Vector2)(collision.transform.position - transform.position));
             damaged.Add(damageableComponent);

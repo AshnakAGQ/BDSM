@@ -52,6 +52,7 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
         rigidbody2D = this.GetComponent<Rigidbody2D>();
         animator = this.GetComponent<Animator>();
         players = new List<PlayerController>(FindObjectsOfType<PlayerController>());
+        audioPlayer = this.GetComponent<AudioPlayer>();
     }
 
     // Update is called once per frame
@@ -126,6 +127,13 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
                     }
                 }
             }
+
+            RaycastHit2D pit = Physics2D.Raycast(transform.position, lookDirection, .75f);
+            if (pit.collider != null && pit.collider.CompareTag("Pit"))
+            {
+                rigidbody2D.velocity = Vector2.zero;
+                timeLeft = 0;
+            }
         }
     }
 
@@ -199,11 +207,19 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
         timeLeft = 0;
         followingPlayer = true;
 
-
         if (health <= 0)
         {
+            if (GameManager.instance)
+            {
+                float distance = float.MaxValue;
+                foreach (GameObject player in GameManager.players)
+                {
+                    float dtp = Vector2.Distance(transform.position, player.transform.position);
+                    if (dtp < distance) distance = dtp;
+                }
+                if (distance < 5) GameManager.instance.GetComponent<AudioPlayer>().PlaySFX(deathSound);
+            }
             Destroy(gameObject);
-            audioPlayer.PlaySFX(deathSound);
         }
     }
 

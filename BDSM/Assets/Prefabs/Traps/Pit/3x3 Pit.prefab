@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5773626709266955002}
   m_Layer: 0
   m_Name: 3x3 Pit
-  m_TagString: Untagged
+  m_TagString: Pit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,6 +106,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pit 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: 4ecd511b6efe83e4fb0f63c115c74af2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ecd511b6efe83e4fb0f63c115c74af2, type: 3}
 --- !u!4 &3699764358827169233 stripped
@@ -180,6 +185,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pit 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: 839846809de3bab4ea356394626ddc31,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 839846809de3bab4ea356394626ddc31, type: 3}
@@ -256,6 +266,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pit 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: c1fbf3100caab094f98f0824cba53b39,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1fbf3100caab094f98f0824cba53b39, type: 3}
 --- !u!4 &2719989172142096945 stripped
@@ -330,6 +345,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pit 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: 3e5f3856237daf94fa090055e553fdd5,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e5f3856237daf94fa090055e553fdd5, type: 3}
@@ -406,6 +426,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pit 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: 412262c5169092542937b16e83fba8bd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 412262c5169092542937b16e83fba8bd, type: 3}
 --- !u!4 &1815037852216728863 stripped
@@ -480,6 +505,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pit 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: cd50f4a0037ab754aabd9b0630542dc7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd50f4a0037ab754aabd9b0630542dc7, type: 3}
@@ -556,6 +586,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pit 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: ac9e0703974f1894181c57c27ad3f248,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac9e0703974f1894181c57c27ad3f248, type: 3}
 --- !u!4 &7557233604382442735 stripped
@@ -631,6 +666,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pit 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: a9774f8698be05d47b6415af9f59237e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9774f8698be05d47b6415af9f59237e, type: 3}
 --- !u!4 &6856962925079747095 stripped
@@ -705,6 +745,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pit 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815965924658006317, guid: cc948447dea1740459d8ae4b8decc9d3,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc948447dea1740459d8ae4b8decc9d3, type: 3}

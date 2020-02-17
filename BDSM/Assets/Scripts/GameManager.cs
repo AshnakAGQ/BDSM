@@ -5,9 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
-    public int score { get; private set; } = 0;
-    public static GameObject [] players;
+    public int Score { get => score; }
 
+    [SerializeField] private int score;
+    public static GameObject [] players;
 
     [Header("Sound")]
     [SerializeField] public AudioContainer goldPickup;
@@ -16,6 +17,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(transform.gameObject);
+        if (instance)
+        {
+            score = instance.score;
+            Destroy(instance.gameObject);
+        }
         instance = this;
         m_AudioPlayer = this.GetComponent<AudioPlayer>();
         players = GameObject.FindGameObjectsWithTag("Player");

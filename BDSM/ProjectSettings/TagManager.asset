@@ -15,6 +15,7 @@ TagManager:
   - Block
   - Projectile
   - Fireball
+  - Pit
   layers:
   - Default
   - TransparentFX
