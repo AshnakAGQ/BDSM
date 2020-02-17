@@ -63,13 +63,13 @@ public class WarriorController : MonoBehaviour
 
     void OnPrimaryAction(InputValue value)
     {
-        if (player.Alive && !blocking && !grabbing && Time.timeScale == 1 && player.Stun <= 0)
+        if (player.Alive && !blocking && !grabbing && !player.isFalling() && Time.timeScale == 1 && player.Stun <= 0)
             sword.Swing();
     }
 
     void OnSecondaryAction(InputValue value)
     {
-        if (player.Alive && value.isPressed && Time.timeScale == 1 && player.Stun <= 0 )
+        if (player.Alive && value.isPressed && !player.isFalling() && Time.timeScale == 1 && player.Stun <= 0 )
         {
             if (objects.Count > 0)
             {

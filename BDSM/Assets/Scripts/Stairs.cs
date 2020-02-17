@@ -14,11 +14,6 @@ public class Stairs : MonoBehaviour
         m_Collider2D = this.GetComponent<Collider2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player")) UI_Manager.WinGame();
-    }
-
     void OnTriggerStay2D(Collider2D collision)
     {
         IMassive massComponent = collision.GetComponent<IMassive>();
@@ -29,6 +24,7 @@ public class Stairs : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 massComponent.Fall(fallingRate);
+                UI_Manager.WinGame();
             }
         }
     }

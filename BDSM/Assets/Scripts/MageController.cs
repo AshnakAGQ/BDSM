@@ -27,7 +27,7 @@ public class MageController : MonoBehaviour
 
     void OnPrimaryAction(InputValue value)
     {
-        if (playerController.Alive && Time.timeScale == 1 && fireball != null && primaryTimer <= 0 && playerController.Stun <= 0)
+        if (playerController.Alive && Time.timeScale == 1 && !playerController.isFalling() && fireball != null && primaryTimer <= 0 && playerController.Stun <= 0)
         {
             Fireball ball = Instantiate(fireball, transform.position + aimingCircle.right, aimingCircle.rotation).GetComponent<Fireball>();
             ball.Target = targetingReticle.position;
@@ -37,7 +37,7 @@ public class MageController : MonoBehaviour
 
     void OnSecondaryAction(InputValue value)
     {
-        if (playerController.Alive && Time.timeScale == 1 && wind != null && secondaryTimer <= 0 && playerController.Stun <= 0)
+        if (playerController.Alive && Time.timeScale == 1 && !playerController.isFalling() && wind != null && secondaryTimer <= 0 && playerController.Stun <= 0)
         {
             Vector3 buffer = ((targetingReticle.position - this.transform.position).normalized * 0.4f);
             Wind newWind = Instantiate(wind, transform.position + aimingCircle.right / 2, aimingCircle.rotation, transform).GetComponent<Wind>();

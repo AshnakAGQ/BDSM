@@ -13,6 +13,7 @@ public class UI_Manager : MonoBehaviour
     public GameObject warriorHP = null;
     public GameObject mageHP = null;
     public bool gameWon = false;
+    int levelGold;
 
     private bool paused = false;
 
@@ -21,9 +22,15 @@ public class UI_Manager : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        levelGold = GameManager.instance.Score;
+    }
+
     public static void GameOver()
     {
         instance.gameOverMenu.SetActive(true);
+        if (!instance.gameWon) GameManager.instance.Score = instance.levelGold;
     }
 
     public static void WinGame()
