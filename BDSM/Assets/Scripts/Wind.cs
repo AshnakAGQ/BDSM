@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Wind : MonoBehaviour
 {
-    [SerializeField] Vector2 target;
     [SerializeField] int animTime = 30;
 
     [Header("Stats")]
@@ -16,12 +15,9 @@ public class Wind : MonoBehaviour
     List<IDamageable> damaged;
 
     int currentTime = 0;
-    new Rigidbody2D rigidbody2D;
     new Collider2D collider2D;
     bool activated = false;
     SpriteRenderer spriteRenderer;
-
-    public Vector2 Target { get => target; set => target = value; }
 
     [SerializeField] public AudioContainer windSound;
     AudioPlayer m_AudioPlayer;
@@ -30,18 +26,20 @@ public class Wind : MonoBehaviour
     {
         m_AudioPlayer = this.GetComponent<AudioPlayer>();
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         collider2D = GetComponent<Collider2D>();
         damaged = new List<IDamageable>();
-
-        rigidbody2D.bodyType = RigidbodyType2D.Static;
+        
         collider2D.isTrigger = true;
     }
 
     private void Start()
     {
-        // m_AudioPlayer.PlaySFX(windSound);
+
+        if (GameManager.instance)
+        {
+            GameManager.instance.GetComponent<AudioPlayer>().PlaySFX(windSound);
+        }
         activated = true;
     }
 

@@ -40,8 +40,7 @@ public class MageController : MonoBehaviour
         if (playerController.Alive && Time.timeScale == 1 && wind != null && secondaryTimer <= 0 && playerController.Stun <= 0)
         {
             Vector3 buffer = ((targetingReticle.position - this.transform.position).normalized * 0.4f);
-            Wind newWind = Instantiate(wind, transform.position + aimingCircle.right + buffer, aimingCircle.rotation).GetComponent<Wind>();
-            newWind.Target = targetingReticle.position;
+            Wind newWind = Instantiate(wind, transform.position + aimingCircle.right / 2, aimingCircle.rotation, transform).GetComponent<Wind>();
             secondaryTimer = secondaryCooldown;
         }
     }
