@@ -13,6 +13,13 @@ public class dartTrap : ActivatableObject
     private float stopWatch = 0;
     private float shotTimer = 0;
 
+    [SerializeField] AudioContainer sound = null;
+    AudioPlayer m_AudioPlayer;
+
+    private void Awake()
+    {
+        m_AudioPlayer = GetComponent<AudioPlayer>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +55,7 @@ public class dartTrap : ActivatableObject
     public override void Activate()
     {
         Instantiate(dart, dartPosition, Quaternion.identity);
+        m_AudioPlayer.PlaySFX(sound);
     }
 
     public override void Deactivate()

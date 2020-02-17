@@ -179,4 +179,9 @@ MonoBehaviour:
   movementTime: 10
   idleTime: 1.5
   blockedReverseAngle: 90
+  hurtSounds:
+  - {fileID: 11400000, guid: 490bd12eb0d14cb41bee5d1425db54ed, type: 2}
+  - {fileID: 11400000, guid: d5731d4033792f140a52322640823b46, type: 2}
+  - {fileID: 11400000, guid: bf173f81d0fe15641b228351e3482947, type: 2}
+  deathSound: {fileID: 11400000, guid: 3f1a1bda7c7919d4abf6b0186889f69a, type: 2}
   lookDirection: {x: 0, y: 0}

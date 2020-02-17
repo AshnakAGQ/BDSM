@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9194577643007270953}
   - component: {fileID: 9194577643007270954}
   - component: {fileID: 9194577643007270952}
+  - component: {fileID: 2252272656342027606}
   m_Layer: 0
   m_Name: PushBlock
   m_TagString: Block
@@ -97,6 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e489239ad2df84ab04fcb169dd627d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pushSound: {fileID: 11400000, guid: 950f240f7b02b0c4da4cb84c7d0cb4b7, type: 2}
+  clickSound: {fileID: 11400000, guid: c21276c6dcc247a488755384f396fc2d, type: 2}
 --- !u!61 &9194577643007270954
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,3 +147,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2252272656342027606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194577643007270957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d4bd1bb71e73f47a3bb1b4c56589b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

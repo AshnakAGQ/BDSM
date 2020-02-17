@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7673752851755730556}
   - component: {fileID: 2409023830522281813}
   - component: {fileID: -7423742068226153989}
+  - component: {fileID: 9092562759282438411}
   m_Layer: 0
   m_Name: dartTrapR
   m_TagString: Untagged
@@ -94,7 +95,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0632edda931514c88fbb1187a33144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  auto: 1
   startDelay: 0
   fireRate: 2
   dart: {fileID: 8033500608000714212, guid: 7b70e0418825f564c9adaa744c41e50c, type: 3}
   dartPosition: {x: 0, y: 0, z: 0}
+  sound: {fileID: 11400000, guid: 20ac578ac18349a459f45f06797a1060, type: 2}
+--- !u!114 &9092562759282438411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32316866485517381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d4bd1bb71e73f47a3bb1b4c56589b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -17,7 +17,6 @@ public class Shield : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(transform.position.y + " vs " + player.transform.position.y);
         spriteRenderer.sortingOrder = Mathf.RoundToInt((transform.position.y+.15f) * 100f) * -1;
         
         if (player != null && player.lookDirection != Vector2.zero)

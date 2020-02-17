@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
     public int score { get; private set; } = 0;
+    public static GameObject [] players;
 
 
     [Header("Sound")]
@@ -17,13 +18,14 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         m_AudioPlayer = this.GetComponent<AudioPlayer>();
+        players = GameObject.FindGameObjectsWithTag("Player");
     }
 
     // Start is called before the first frame update
     void Start()
     {
         UnityEngine.Cursor.visible = false;
-    }
+}
 
     // Update is called once per frame
     void Update()

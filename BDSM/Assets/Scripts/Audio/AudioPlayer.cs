@@ -34,7 +34,19 @@ public class AudioPlayer : MonoBehaviour
             activeSources++;
             addSound(sound);
             AudioSource tempSource = this.gameObject.AddComponent<AudioSource>();
-            tempSource.volume = sound.volume;
+            if (sound.spatialBlend == 0 && sound.maxDistance > 0)
+            {
+                float distance = float.MaxValue;
+                foreach (GameObject player in GameManager.players)
+                {
+                    float dtp = Vector2.Distance(transform.position, player.transform.position);
+                    if (dtp < distance) distance = dtp;
+                }
+                if (distance < sound.maxDistance) tempSource.volume = sound.volume * (sound.maxDistance - distance) / sound.maxDistance;
+                else tempSource.volume = 0;
+            }
+            else
+                tempSource.volume = sound.volume;
             tempSource.pitch = Random.Range(sound.pitchMin, sound.pitchMax);
             tempSource.maxDistance = sound.maxDistance;
             tempSource.spatialBlend = sound.spatialBlend;

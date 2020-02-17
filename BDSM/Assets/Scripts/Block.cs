@@ -10,10 +10,15 @@ public class Block : MonoBehaviour, IMassive
     Transform originalParent;
     bool canMove = false;
 
+    [SerializeField] AudioContainer pushSound = null;
+    [SerializeField] AudioContainer clickSound = null;
+    AudioPlayer m_AudioPlayer;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        m_AudioPlayer = GetComponent<AudioPlayer>();
     }
 
     private void Start()
@@ -34,7 +39,11 @@ public class Block : MonoBehaviour, IMassive
         }
         if (canMove)
         {
-            rigidbody.velocity = warrior.GetComponent<Rigidbody2D>().velocity;
+            if (warrior.GetComponent<Rigidbody2D>().velocity != Vector2.zero)
+            {
+                m_AudioPlayer.PlaySFX(pushSound);
+                rigidbody.velocity = warrior.GetComponent<Rigidbody2D>().velocity;
+            }
         }
     }
 
@@ -70,6 +79,11 @@ public class Block : MonoBehaviour, IMassive
     public void Fall(float fallingRate)
     {
         print("triggered");
+        if (GameManager.instance)
+        {
+            GameManager.instance.GetComponent<AudioPlayer>().PlaySFX(pushSound);
+            GameManager.instance.GetComponent<AudioPlayer>().PlaySFX(clickSound);
+        }
         Destroy(gameObject);
     }
 }

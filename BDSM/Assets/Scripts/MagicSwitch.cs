@@ -11,11 +11,14 @@ public class MagicSwitch : MonoBehaviour
     bool activated = false;
 
     public bool Activated { get => activated; }
+    [SerializeField] AudioContainer sound = null;
+    AudioPlayer m_AudioPlayer;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        m_AudioPlayer = GetComponent<AudioPlayer>();
     }
 
     private void Start()
@@ -38,6 +41,7 @@ public class MagicSwitch : MonoBehaviour
             }
             if (animator != null) animator.SetTrigger("activated");
             if (target != null && activate) target.Activate();
+            m_AudioPlayer.PlaySFX(sound);
         }
     }
 }

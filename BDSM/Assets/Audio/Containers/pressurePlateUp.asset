@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ff9664227ee71d43bb48b508b5b6685, type: 3}
+  m_Name: pressurePlateUp
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 4a9e63e617acba04e8a20e332570c897, type: 3}
+  volume: 0.2
+  pitchMin: 1.05
+  pitchMax: 0.95
+  spatialBlend: 0
+  maxDistance: 5

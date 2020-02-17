@@ -26,7 +26,12 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
     [SerializeField] float movementTime = 10;
     [SerializeField] float idleTime = 1.5f;
     [SerializeField] float blockedReverseAngle = 90;
-    
+
+    [Header("Sounds")]
+    private AudioPlayer audioPlayer;
+    [SerializeField] List<AudioContainer> hurtSounds;
+    [SerializeField] AudioContainer deathSound;
+
     float timeLeft;
     bool moving;
     bool canBounce = false;
@@ -183,14 +188,22 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
         // Face Attacker
         lookDirection = -knockback;
 
+        if (damage > 0 && damage < health)
+        {
+            int index = UnityEngine.Random.Range(0, hurtSounds.Count);
+            audioPlayer.PlaySFX(hurtSounds[index]);
+        }
+
         health -= damage;
         this.stun = stun;
         timeLeft = 0;
         followingPlayer = true;
 
+
         if (health <= 0)
         {
             Destroy(gameObject);
+            audioPlayer.PlaySFX(deathSound);
         }
     }
 

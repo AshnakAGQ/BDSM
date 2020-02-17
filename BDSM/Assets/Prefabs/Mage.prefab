@@ -161,6 +161,12 @@ MonoBehaviour:
   lookDirection: {x: 0, y: 0}
   healthBar: {fileID: 0}
   footStepClip: {fileID: 11400000, guid: 32081bd53d92c884ca75fdd264b7c8bc, type: 2}
+  hurtSounds:
+  - {fileID: 11400000, guid: 7d965c32593f9e349b78857e2c77be70, type: 2}
+  - {fileID: 11400000, guid: c25cae67b7db0864fa4746d7f70bfc85, type: 2}
+  - {fileID: 11400000, guid: d818ebc4a71cee3469210ac748f82be8, type: 2}
+  deathSound: {fileID: 11400000, guid: 598518dadd634a048871fc85e01447ce, type: 2}
+  warriorBlock: {fileID: 0}
   speed: 4
   maxHealth: 200
   health: 200

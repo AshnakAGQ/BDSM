@@ -27,7 +27,10 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
 
     [Header("Sound")]
     [SerializeField] public AudioContainer footStepClip;
-    
+    [SerializeField] List<AudioContainer> hurtSounds;
+    [SerializeField] AudioContainer deathSound;
+    [SerializeField] public AudioContainer warriorBlock;
+
     [Header("Stats")]
     [SerializeField] float speed = 5f;
     float stun = 0;
@@ -293,11 +296,19 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     {
         WarriorController warriorCheck = GetComponent<WarriorController>();
         if (warriorCheck && warriorCheck.Blocking && Vector2.Angle(lookDirection, -knockback) < warriorCheck.BlockAngle / 2)
+        {
+            audioPlayer.PlaySFX(warriorBlock);
             return;
-        if (health > 0)
+        }
+        else if (health > 0)
         {
             rigidbody2D.velocity = Vector2.zero;
-            if (damage > 0) bleed = true;
+            if (damage > 0 && damage < health)
+            {
+                bleed = true;
+                int index = UnityEngine.Random.Range(0, hurtSounds.Count);
+                audioPlayer.PlaySFX(hurtSounds[index]);
+            }
             health -= damage;
             healthBar.GetComponent<Image>().fillAmount = health / maxHealth;
             rigidbody2D.AddForce(knockback);
@@ -311,6 +322,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
             transform.right = -transform.up;
             playerDies.Invoke();
             rigidbody2D.drag = 10f;
+            audioPlayer.PlaySFX(deathSound);
         }
     }
 
@@ -364,5 +376,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         spriteRenderer.enabled = false;
         alive = false;
         playerDies.Invoke();
+        UI_Manager.GameOver();
     }
 }
