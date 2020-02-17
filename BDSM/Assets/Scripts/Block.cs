@@ -86,4 +86,9 @@ public class Block : MonoBehaviour, IMassive
         }
         Destroy(gameObject);
     }
+
+    public bool isFalling()
+    {
+        return false;
+    }
 }

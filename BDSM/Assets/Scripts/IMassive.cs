@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IMassive
 {
     void Fall(float fallingRate);
+    bool isFalling();
 }

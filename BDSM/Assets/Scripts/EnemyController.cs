@@ -311,8 +311,12 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
 
     public void Fall(float fallingRate)
     {
-        rigidbody2D.velocity = Vector2.zero; // Stop moving around, you're falling in a pit!
-        StartCoroutine(fallCoroutine(fallingRate));
+        if (!falling)
+        {
+            rigidbody2D.velocity = Vector2.zero; // Stop moving around, you're falling in a pit!
+            falling = true;
+            StartCoroutine(fallCoroutine(fallingRate));
+        }
     }
 
     private IEnumerator fallCoroutine(float fallingRate)
@@ -324,5 +328,10 @@ public class EnemyController : MonoBehaviour, IDamageable, IMassive
             yield return null;
         }
         Destroy(this.gameObject);
+    }
+
+    public bool isFalling()
+    {
+        return falling;
     }
 }

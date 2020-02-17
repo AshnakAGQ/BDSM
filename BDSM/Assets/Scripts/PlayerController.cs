@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
     List<IInteractable> interactables;
     List<PlayerController> playersTouching;
 
-    public static GameObjectUnityEvent PitEvent = new GameObjectUnityEvent();
+    public static GameObjectUnityEvent PitEvent;
 
     public float Speed { get => speed; set => speed = value; }
     public float Stun { get => stun; }
@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         interactables = new List<IInteractable>();
         playersTouching = new List<PlayerController>();
         BloodParticles = GetComponentInChildren<ParticleSystem>();
+        PitEvent = new GameObjectUnityEvent();
     }
 
     private void Start()
@@ -377,5 +378,10 @@ public class PlayerController : MonoBehaviour, IDamageable, IHealable, IMassive
         alive = false;
         playerDies.Invoke();
         UI_Manager.GameOver();
+    }
+
+    public bool isFalling()
+    {
+        return falling;
     }
 }

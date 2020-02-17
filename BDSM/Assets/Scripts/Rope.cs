@@ -18,11 +18,12 @@ public class Rope : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         lineRenderer.positionCount = 2 * players.Length + 1;
+        PlayerController.PitEvent.AddListener(shrinkRope);
     }
 
     private void OnEnable()
     {
-        PlayerController.PitEvent.AddListener(shrinkRope);
+        
     }
 
     private void OnDisable()

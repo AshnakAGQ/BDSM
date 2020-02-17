@@ -18,10 +18,7 @@ public class UI_Manager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(this);
+        instance = this;
     }
 
     public static void GameOver()
