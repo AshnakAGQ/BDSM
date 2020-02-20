@@ -19,6 +19,7 @@ public class dartTrap : ActivatableObject
     private void Awake()
     {
         m_AudioPlayer = GetComponent<AudioPlayer>();
+        shotTimer += fireRate;
     }
 
     // Start is called before the first frame update
