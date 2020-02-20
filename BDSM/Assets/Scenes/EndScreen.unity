@@ -708,7 +708,18 @@ MonoBehaviour:
     Licensed
     under Creative Commons: By Attribution 4.0 License
 
-    http://creativecommons.org/licenses/by/4.0/'
+    http://creativecommons.org/licenses/by/4.0/
+
+
+    Level
+    3 Music:
+
+    "Dungeon of Agony" Gundatsch https://soundcloud.com/gundatsch
+
+    Licensed
+    under Creative Commons: By Attribution 3.0 License
+
+    http://creativecommons.org/licenses/by/3.0/'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -736,7 +747,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 14.95
+  m_fontSize: 12
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -753,7 +764,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 638
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -777,12 +788,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 2040858535}
-    characterCount: 567
+    characterCount: 741
     spriteCount: 0
-    spaceCount: 71
-    wordCount: 84
+    spaceCount: 89
+    wordCount: 111
     linkCount: 0
-    lineCount: 16
+    lineCount: 21
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
